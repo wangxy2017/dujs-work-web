@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wxy.mapper.BookmarkMapper">
+
+    <insert id="save" parameterType="bookmark" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_bookmark(icon,href,name)
+        values(#{icon},#{href},#{name})
+    </insert>
+
+    <insert id="saveByBatch">
+        insert into sys_bookmark(icon,href,name)
+        values
+        <foreach collection="list" item="b" separator=",">
+            (#{b.icon},#{b.href},#{b.name})
+        </foreach>
+    </insert>
+
+
+    <select id="queryList" resultType="bookmark" parameterType="bookmark">
+        select * from sys_bookmark where 1=1
+        <if test="name != null and name != ''">name like concat("%",#{name},"%")</if>
+    </select>
+</mapper>

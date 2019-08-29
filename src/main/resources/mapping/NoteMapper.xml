@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wxy.mapper.NoteMapper">
+
+    <insert id="save" parameterType="note" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_note(title,content,password)
+        values(#{title},#{content},#{password})
+    </insert>
+
+    <select id="queryById" parameterType="long" resultType="note">
+        select * from sys_note where id = #{id}
+    </select>
+</mapper>
