@@ -43,7 +43,7 @@ public class LoginController {
             request.getSession().setAttribute("loginUser", user1);
             return ApiResponse.success();
         }
-        return ApiResponse.error(-1, "用户名或密码错误");
+        return ApiResponse.error("用户名或密码错误");
     }
 
     /**

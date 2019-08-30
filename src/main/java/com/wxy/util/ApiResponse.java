@@ -19,23 +19,37 @@ public class ApiResponse {
         this.data = data;
     }
 
-    private static final Integer ERROR_CODE = 0;
-    private static final Integer SUCCESS_CODE = 1;
+    private static final Integer DEFAULT_SUCCESS_CODE = 1;
+    private static final String DEFAULT_SUCCESS_MSG = "SUCCESS";
+    private static final Integer DEFAULT_ERROR_CODE = -1;
+    private static final String DEFAULT_ERROR_MSG = "ERROR";
 
     public static ApiResponse success() {
-        return new ApiResponse(SUCCESS_CODE, "success", null);
+        return new ApiResponse(DEFAULT_SUCCESS_CODE, DEFAULT_SUCCESS_MSG, null);
     }
 
     public static ApiResponse success(Object data) {
-        return new ApiResponse(SUCCESS_CODE, "success", data);
+        return new ApiResponse(DEFAULT_SUCCESS_CODE, DEFAULT_SUCCESS_MSG, data);
+    }
+
+    public static ApiResponse success(Integer code, String msg) {
+        return new ApiResponse(code, msg, null);
+    }
+
+    public static ApiResponse success(String msg) {
+        return new ApiResponse(DEFAULT_SUCCESS_CODE, msg, null);
     }
 
     public static ApiResponse error() {
-        return new ApiResponse(ERROR_CODE, "error", null);
+        return new ApiResponse(DEFAULT_ERROR_CODE, DEFAULT_ERROR_MSG, null);
     }
 
     public static ApiResponse error(Integer code, String msg) {
         return new ApiResponse(code, msg, null);
+    }
+
+    public static ApiResponse error(String msg) {
+        return new ApiResponse(DEFAULT_ERROR_CODE, msg, null);
     }
 }
 

@@ -39,9 +39,9 @@ public class RegisterController {
         if (userService.saveUser(user.getUsername(), user.getPassword(), user.getEmail()) > 0) {
             User user1 = userService.queryByUsername(user.getUsername());
             request.getSession().setAttribute("loginUser",user1);
-            return ApiResponse.success();
+            return ApiResponse.success("注册成功");
         }
-        return ApiResponse.error();
+        return ApiResponse.error("注册失败");
     }
 
     /**
@@ -57,7 +57,7 @@ public class RegisterController {
         if (user != null) {
             return ApiResponse.success("用户已存在");
         }
-        return ApiResponse.error();
+        return ApiResponse.error("用户不存在");
     }
 
     /**
@@ -73,6 +73,6 @@ public class RegisterController {
         if (user != null) {
             return ApiResponse.success("邮箱已存在");
         }
-        return ApiResponse.error();
+        return ApiResponse.error("邮箱不存在");
     }
 }
