@@ -37,4 +37,12 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(id, "The parameter id is required");
         return userMapper.queryById(id);
     }
+
+    @Override
+    public User queryByUsername(String username) {
+        Assert.notNull(username, "The parameter username is required");
+        User user = new User();
+        user.setUsername(username);
+        return userMapper.queryByProperties(user);
+    }
 }

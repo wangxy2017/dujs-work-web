@@ -12,4 +12,8 @@
     <select id="queryById" parameterType="long" resultType="user">
         select * from sys_user where id = #{id}
     </select>
+
+    <select id="queryByProperties" parameterType="user" resultType="user">
+        select * from sys_user where username = #{username}
+    </select>
 </mapper>

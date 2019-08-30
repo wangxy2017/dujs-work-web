@@ -12,4 +12,6 @@ public interface UserService {
     int saveUser(String username, String password, String email);
 
     User queryById(Long id);
+
+    User queryByUsername(String username);
 }
