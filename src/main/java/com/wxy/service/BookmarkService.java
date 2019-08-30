@@ -36,5 +36,5 @@ public interface BookmarkService {
      *
      * @param userId
      */
-    void deleteAll(Long userId);
+    boolean deleteAll(Long userId);
 }

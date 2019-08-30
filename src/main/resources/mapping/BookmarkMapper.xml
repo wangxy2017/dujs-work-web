@@ -5,21 +5,26 @@
 <mapper namespace="com.wxy.mapper.BookmarkMapper">
 
     <insert id="save" parameterType="bookmark" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_bookmark(icon,href,name)
-        values(#{icon},#{href},#{name})
+        insert into sys_bookmark(icon,href,name,user_id)
+        values(#{icon},#{href},#{name},#{userId})
     </insert>
 
     <insert id="saveByBatch">
-        insert into sys_bookmark(icon,href,name)
+        insert into sys_bookmark(icon,href,name,user_id)
         values
         <foreach collection="list" item="b" separator=",">
-            (#{b.icon},#{b.href},#{b.name})
+            (#{b.icon},#{b.href},#{b.name},#{b.userId})
         </foreach>
     </insert>
 
 
     <select id="queryList" resultType="bookmark" parameterType="bookmark">
         select * from sys_bookmark where 1=1
-        <if test="name != null and name != ''">name like concat("%",#{name},"%")</if>
+        <if test="userId != null">and user_id = #{userId}</if>
+        <if test="name != null and name != ''">and name like concat("%",#{name},"%")</if>
     </select>
+
+    <delete id="deleteByUserId" parameterType="long">
+        delete from sys_bookmark where user_id = #{userId}
+    </delete>
 </mapper>

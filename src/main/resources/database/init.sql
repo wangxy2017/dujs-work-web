@@ -9,6 +9,8 @@ CREATE TABLE `sys_note` (
   `title` varchar(64) NOT NULL,
   `content` text NOT NULL,
   `password` varchar(64) NOT NULL,
+  `category_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -20,6 +22,7 @@ CREATE TABLE `sys_bookmark` (
   `icon` varchar(200) NOT NULL,
   `href` varchar(200) NOT NULL,
   `name` varchar(200) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -29,6 +32,7 @@ CREATE TABLE `sys_category` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` int(1) NOT NULL DEFAULT '0',
   `name` varchar(64) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -41,6 +45,7 @@ CREATE TABLE `sys_user` (
   `password` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
   `salt` varchar(64) NOT NULL,
+  `nick_name` varchar(64),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
