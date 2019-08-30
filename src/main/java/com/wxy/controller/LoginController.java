@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,5 +37,18 @@ public class LoginController {
             return ApiResponse.success();
         }
         return ApiResponse.error(-1, "用户名或密码错误");
+    }
+
+    /**
+     * 注销
+     *
+     * @param request
+     * @return
+     */
+    @ApiOperation(value = "注销", notes = "注销")
+    @GetMapping("/logout")
+    public ApiResponse logout(@ApiIgnore HttpServletRequest request) {
+        request.getSession().setAttribute("loginUser", null);
+        return ApiResponse.success();
     }
 }
