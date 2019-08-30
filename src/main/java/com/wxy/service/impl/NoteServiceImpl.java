@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.List;
+
 /**
  * @Author wxy
  * @Date 19-7-19 上午11:57
@@ -21,13 +23,16 @@ public class NoteServiceImpl implements NoteService {
     private NoteMapper noteMapper;
 
     @Override
-    public int saveNote(String title, String content) {
+    public int saveNote(String title, String content, Long categoryId, Long userId) {
         Assert.hasText(title, "The parameter title is required");
         Assert.hasText(content, "The parameter content is required");
+        Assert.isNull(userId, "The parameter userId is required");
         Note note = new Note();
         note.setTitle(title);
         note.setPassword(MD5Utils.getSalt(8));
         note.setContent(AESUtils.encrypt(content, note.getPassword()));
+        note.setCategoryId(categoryId == null ? 0 : categoryId);
+        note.setUserId(userId);
         return noteMapper.save(note);
     }
 
@@ -40,5 +45,33 @@ public class NoteServiceImpl implements NoteService {
             return note;
         }
         return null;
+    }
+
+    @Override
+    public List<Note> findAll(Long userId, Long categoryId) {
+        Assert.notNull(userId, "The parameter userId is required");
+        Note note = new Note();
+        note.setUserId(userId);
+        note.setCategoryId(categoryId == null ? 0 : categoryId);
+        return noteMapper.queryList(note);
+    }
+
+    @Override
+    public int updateNote(Long id, String title, String content, Long categoryId) {
+        Assert.notNull(id, "The parameter id is required");
+        Note note = queryById(id);
+        if (note != null) {
+            note.setTitle(title);
+            note.setPassword(MD5Utils.getSalt(8));
+            note.setContent(AESUtils.encrypt(content, note.getPassword()));
+            note.setCategoryId(categoryId);
+            return noteMapper.update(note);
+        }
+        throw new RuntimeException("查询出错");
+    }
+
+    @Override
+    public void deleteNote(Long id) {
+        noteMapper.deleteActive(id);
     }
 }

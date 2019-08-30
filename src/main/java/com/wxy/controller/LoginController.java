@@ -28,6 +28,13 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 登录
+     *
+     * @param request
+     * @param user
+     * @return
+     */
     @ApiOperation(value = "登录", notes = "登录")
     @PostMapping("/login")
     public ApiResponse login(@ApiIgnore HttpServletRequest request, @RequestBody UserParam user) {
