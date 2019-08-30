@@ -10,7 +10,26 @@ import java.util.List;
  * @Description TODO
  **/
 public interface CategoryService {
-    int saveCategory(String name);
+    /**
+     * 新增分类
+     *
+     * @param name
+     * @param userId
+     * @return
+     */
+    int saveCategory(String name, Long userId);
 
-    List<Category> findAll();
+    /**
+     * 查询列表
+     *
+     * @return
+     */
+    List<Category> findAll(Long userId);
+
+    /**
+     * 删除分类
+     *
+     * @param id
+     */
+    void deleteCategory(Long id);
 }

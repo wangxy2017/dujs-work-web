@@ -21,15 +21,28 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryMapper categoryMapper;
 
     @Override
-    public int saveCategory(String name) {
+    public int saveCategory(String name, Long userId) {
         Assert.hasText(name, "The parameter name is required");
+        Assert.isNull(userId, "The parameter userId is required");
         Category category = new Category();
         category.setName(name);
+        category.setUserId(userId);
         return categoryMapper.save(category);
     }
 
     @Override
-    public List<Category> findAll() {
-        return categoryMapper.queryList(null);
+    public List<Category> findAll(Long userId) {
+        Assert.isNull(userId, "The parameter userId is required");
+        Category category = new Category();
+        category.setUserId(userId);
+        return categoryMapper.queryList(category);
+    }
+
+    @Override
+    public void deleteCategory(Long id) {
+        Assert.isNull(id, "The parameter id is required");
+        categoryMapper.delete(id);
+        // 更新分类下面的笔记
+        categoryMapper.resetNoteCategory(id);
     }
 }
