@@ -25,4 +25,14 @@ public interface UserService {
      * @return
      */
     int updatePassword(Long userId, String oldPassword, String newPassword);
+
+    /**
+     * 修改基本信息
+     *
+     * @param userId
+     * @param email
+     * @param nickName
+     * @return
+     */
+    int updateUser(Long userId, String email, String nickName);
 }

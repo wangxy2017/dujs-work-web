@@ -10,8 +10,24 @@ import lombok.Data;
  **/
 @Data
 public class User extends BaseEntity {
+    /**
+     * 账号
+     */
     private String username;
+    /**
+     * 密码
+     */
     private String password;
+    /**
+     * 邮箱
+     */
     private String email;
+    /**
+     * 盐值
+     */
     private String salt;
+    /**
+     * 昵称
+     */
+    private String nickName;
 }

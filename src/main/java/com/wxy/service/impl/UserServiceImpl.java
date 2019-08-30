@@ -71,4 +71,14 @@ public class UserServiceImpl implements UserService {
         }
         throw new RuntimeException("密码错误");
     }
+
+    @Override
+    public int updateUser(Long userId, String email, String nickName) {
+        Assert.notNull(userId, "The parameter userId is required");
+        User user = new User();
+        user.setId(userId);
+        user.setEmail(email);
+        user.setNickName(nickName);
+        return userMapper.update(user);
+    }
 }
