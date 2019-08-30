@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     public int saveUser(String username, String password, String email) {
         Assert.hasText(username, "The parameter username is required");
         Assert.hasText(password, "The parameter password is required");
-        Assert.hasText(email, "The parameter email is required");
+        Assert.hasText(email, "The   parameter email is required");
         User user = new User();
         user.setUsername(username);
         User user1 = userMapper.queryByProperties(user);

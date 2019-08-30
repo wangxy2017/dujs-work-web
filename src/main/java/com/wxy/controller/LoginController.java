@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  **/
 @Api(description = "登录控制器")
 @RestController
+@RequestMapping("/login")
 @Slf4j
 public class LoginController {
 
@@ -37,6 +39,6 @@ public class LoginController {
             request.getSession().setAttribute("loginUser", user1);
             return ApiResponse.success();
         }
-        return ApiResponse.error();
+        return ApiResponse.error(-1, "用户名或密码错误");
     }
 }

@@ -9,6 +9,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author wxy
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
  **/
 @Api(description = "注册控制器")
 @RestController
+@RequestMapping("/register")
 @Slf4j
 public class RegisterController {
 
@@ -31,8 +35,10 @@ public class RegisterController {
      */
     @ApiOperation(value = "注册", notes = "注册")
     @PostMapping("/register")
-    public ApiResponse register(@RequestBody UserParam user) {
+    public ApiResponse register(@ApiIgnore HttpServletRequest request, @RequestBody UserParam user) {
         if (userService.saveUser(user.getUsername(), user.getPassword(), user.getEmail()) > 0) {
+            User user1 = userService.queryByUsername(user.getUsername());
+            request.getSession().setAttribute("loginUser",user1);
             return ApiResponse.success();
         }
         return ApiResponse.error();
@@ -45,11 +51,11 @@ public class RegisterController {
      * @return
      */
     @ApiOperation(value = "检查账号是否存在", notes = "检查账号是否存在")
-    @GetMapping("/checkUser")
-    public ApiResponse checkUser(@RequestParam String username) {
+    @GetMapping("/checkUsername")
+    public ApiResponse checkUsername(@RequestParam String username) {
         User user = userService.queryByUsername(username);
-        if (user == null) {
-            return ApiResponse.success("用户不存在");
+        if (user != null) {
+            return ApiResponse.success("用户已存在");
         }
         return ApiResponse.error();
     }
@@ -64,8 +70,8 @@ public class RegisterController {
     @GetMapping("/checkEmail")
     public ApiResponse checkEmail(@RequestParam String email) {
         User user = userService.queryByEmail(email);
-        if (user == null) {
-            return ApiResponse.success("邮箱不存在");
+        if (user != null) {
+            return ApiResponse.success("邮箱已存在");
         }
         return ApiResponse.error();
     }
