@@ -50,13 +50,5 @@ public interface BaseMapper<T> {
      * @return
      */
     T queryById(Long id);
-
-    /**
-     * 根据对象属性查询
-     *
-     * @param t
-     * @return
-     */
-    T queryByProperties(T t);
 }
 

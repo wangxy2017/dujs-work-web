@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.List;
+
 /**
  * @Author wxy
  * @Date 19-7-24 下午5:28
@@ -26,8 +28,8 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(email, "The   parameter email is required");
         User user = new User();
         user.setUsername(username);
-        User user1 = userMapper.queryByProperties(user);
-        if (user1 == null) {
+        List<User> list = userMapper.queryList(user);
+        if (list.size() == 0) {
             user.setSalt(MD5Utils.getSalt(8));
             user.setPassword(MD5Utils.MD5Encode(password, user.getSalt()));
             user.setEmail(email);
@@ -47,7 +49,11 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(username, "The parameter username is required");
         User user = new User();
         user.setUsername(username);
-        return userMapper.queryByProperties(user);
+        List<User> list = userMapper.queryList(user);
+        if (list.size() == 1) {
+            return list.get(0);
+        }
+        throw new RuntimeException("查询错误");
     }
 
     @Override
@@ -55,7 +61,11 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(email, "The parameter email is required");
         User user = new User();
         user.setEmail(email);
-        return userMapper.queryByProperties(user);
+        List<User> list = userMapper.queryList(user);
+        if (list.size() == 1) {
+            return list.get(0);
+        }
+        throw new RuntimeException("查询错误");
     }
 
     @Override

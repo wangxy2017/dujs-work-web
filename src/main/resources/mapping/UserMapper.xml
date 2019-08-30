@@ -13,7 +13,7 @@
         select * from sys_user where id = #{id}
     </select>
 
-    <select id="queryByProperties" parameterType="user" resultType="user">
+    <select id="queryList" parameterType="user" resultType="user">
         select * from sys_user where 1=1
         <if test="username != null and username != ''">and username = #{username}</if>
         <if test="email != null and email != ''">and email = #{email}</if>
