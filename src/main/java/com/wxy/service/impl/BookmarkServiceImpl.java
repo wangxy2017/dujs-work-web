@@ -33,9 +33,9 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     public PageModel<Bookmark> queryPageList(Long userId, String name, Integer pageNum, Integer pageSize) {
-        Assert.isNull(userId, "The parameter userId is required");
-        Assert.isNull(pageNum, "The parameter pageNum is required");
-        Assert.isNull(pageSize, "The parameter pageSize is required");
+        Assert.notNull(userId, "The parameter userId is required");
+        Assert.notNull(pageNum, "The parameter pageNum is required");
+        Assert.notNull(pageSize, "The parameter pageSize is required");
         PageHelper.startPage(pageNum, pageSize);
 
         Bookmark bookmark = new Bookmark();
@@ -47,7 +47,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     public void deleteAll(Long userId) {
-        Assert.isNull(userId, "The parameter userId is required");
+        Assert.notNull(userId, "The parameter userId is required");
         bookmarkMapper.deleteByUserId(userId);
     }
 }

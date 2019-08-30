@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public int saveCategory(String name, Long userId) {
         Assert.hasText(name, "The parameter name is required");
-        Assert.isNull(userId, "The parameter userId is required");
+        Assert.notNull(userId, "The parameter userId is required");
         Category category = new Category();
         category.setName(name);
         category.setUserId(userId);
@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> findAll(Long userId) {
-        Assert.isNull(userId, "The parameter userId is required");
+        Assert.notNull(userId, "The parameter userId is required");
         Category category = new Category();
         category.setUserId(userId);
         return categoryMapper.queryList(category);
@@ -40,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Long id) {
-        Assert.isNull(id, "The parameter id is required");
+        Assert.notNull(id, "The parameter id is required");
         categoryMapper.delete(id);
         // 更新分类下面的笔记
         categoryMapper.resetNoteCategory(id);

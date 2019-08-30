@@ -16,4 +16,13 @@ public interface UserService {
     User queryByUsername(String username);
 
     User queryByEmail(String email);
+
+    /**
+     * 修改密码
+     *
+     * @param userId
+     * @param newPassword
+     * @return
+     */
+    int updatePassword(Long userId, String oldPassword, String newPassword);
 }

@@ -26,7 +26,7 @@ public class NoteServiceImpl implements NoteService {
     public int saveNote(String title, String content, Long categoryId, Long userId) {
         Assert.hasText(title, "The parameter title is required");
         Assert.hasText(content, "The parameter content is required");
-        Assert.isNull(userId, "The parameter userId is required");
+        Assert.notNull(userId, "The parameter userId is required");
         Note note = new Note();
         note.setTitle(title);
         note.setPassword(MD5Utils.getSalt(8));

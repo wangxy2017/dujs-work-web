@@ -12,4 +12,5 @@ public class UserParam {
     private String username;
     private String password;
     private String email;
+    private String new_password;
 }

@@ -57,4 +57,18 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         return userMapper.queryByProperties(user);
     }
+
+    @Override
+    public int updatePassword(Long userId, String oldPassword, String newPassword) {
+        Assert.notNull(userId, "The parameter userId is required");
+        Assert.notNull(oldPassword, "The parameter oldPassword is required");
+        Assert.notNull(newPassword, "The parameter newPassword is required");
+        User user = userMapper.queryById(userId);
+        if (user != null && user.getPassword().equals(MD5Utils.MD5Encode(oldPassword, user.getSalt()))) {
+            user.setSalt(MD5Utils.getSalt(8));
+            user.setPassword(MD5Utils.MD5Encode(newPassword, user.getSalt()));
+            return userMapper.update(user);
+        }
+        throw new RuntimeException("密码错误");
+    }
 }
