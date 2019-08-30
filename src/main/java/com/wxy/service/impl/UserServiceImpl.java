@@ -7,6 +7,7 @@ import com.wxy.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User queryByUsername(String username) {
-        Assert.notNull(username, "The parameter username is required");
+        Assert.hasText(username, "The parameter username is required");
         User user = new User();
         user.setUsername(username);
         List<User> list = userMapper.queryList(user);
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User queryByEmail(String email) {
-        Assert.notNull(email, "The parameter email is required");
+        Assert.hasText(email, "The parameter email is required");
         User user = new User();
         user.setEmail(email);
         List<User> list = userMapper.queryList(user);
@@ -71,8 +72,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updatePassword(Long userId, String oldPassword, String newPassword) {
         Assert.notNull(userId, "The parameter userId is required");
-        Assert.notNull(oldPassword, "The parameter oldPassword is required");
-        Assert.notNull(newPassword, "The parameter newPassword is required");
+        Assert.hasText(oldPassword, "The parameter oldPassword is required");
+        Assert.hasText(newPassword, "The parameter newPassword is required");
         User user = userMapper.queryById(userId);
         if (user != null && user.getPassword().equals(MD5Utils.MD5Encode(oldPassword, user.getSalt()))) {
             user.setSalt(MD5Utils.getSalt(8));
@@ -85,6 +86,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUser(Long userId, String email, String nickName) {
         Assert.notNull(userId, "The parameter userId is required");
+        if (StringUtils.hasText(email)) {
+            User user1 = queryByEmail(email);
+            if (user1 != null) {
+                throw new RuntimeException("邮箱已存在");
+            }
+        }
         User user = new User();
         user.setId(userId);
         user.setEmail(email);

@@ -5,11 +5,17 @@
 <mapper namespace="com.wxy.mapper.CategoryMapper">
 
     <insert id="save" parameterType="category" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_category(name)
-        values(#{name})
+        insert into sys_category(name,user_id)
+        values(#{name},#{userId})
     </insert>
 
     <select id="queryList" parameterType="category" resultType="category">
-        select * from sys_category
+        select * from sys_category where 1=1
+        <if test="userId !=null">and user_id = #{userId}</if>
+        <if test="name !=null and name != ''">and name = #{name}</if>
     </select>
+
+    <delete id="delete" parameterType="long">
+        delete from sys_category where id = #{id}
+    </delete>
 </mapper>

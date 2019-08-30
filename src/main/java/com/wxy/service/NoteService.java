@@ -53,5 +53,5 @@ public interface NoteService {
      *
      * @param id
      */
-    void deleteNote(Long id);
+    boolean deleteNote(Long id);
 }

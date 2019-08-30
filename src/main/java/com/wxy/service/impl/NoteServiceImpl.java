@@ -26,12 +26,13 @@ public class NoteServiceImpl implements NoteService {
     public int saveNote(String title, String content, Long categoryId, Long userId) {
         Assert.hasText(title, "The parameter title is required");
         Assert.hasText(content, "The parameter content is required");
+        Assert.notNull(categoryId, "The parameter categoryId is required");
         Assert.notNull(userId, "The parameter userId is required");
         Note note = new Note();
         note.setTitle(title);
         note.setPassword(MD5Utils.getSalt(8));
         note.setContent(AESUtils.encrypt(content, note.getPassword()));
-        note.setCategoryId(categoryId == null ? 0 : categoryId);
+        note.setCategoryId(categoryId);
         note.setUserId(userId);
         return noteMapper.save(note);
     }
@@ -41,6 +42,7 @@ public class NoteServiceImpl implements NoteService {
         Assert.notNull(id, "The parameter id is required");
         Note note = noteMapper.queryById(id);
         if (note != null) {
+            // 解密
             note.setContent(AESUtils.decrypt(note.getContent(), note.getPassword()));
             return note;
         }
@@ -52,14 +54,14 @@ public class NoteServiceImpl implements NoteService {
         Assert.notNull(userId, "The parameter userId is required");
         Note note = new Note();
         note.setUserId(userId);
-        note.setCategoryId(categoryId == null ? 0 : categoryId);
+        note.setCategoryId(categoryId);
         return noteMapper.queryList(note);
     }
 
     @Override
     public int updateNote(Long id, String title, String content, Long categoryId) {
         Assert.notNull(id, "The parameter id is required");
-        Note note = queryById(id);
+        Note note = noteMapper.queryById(id);
         if (note != null) {
             note.setTitle(title);
             note.setPassword(MD5Utils.getSalt(8));
@@ -71,7 +73,9 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void deleteNote(Long id) {
-        noteMapper.deleteActive(id);
+    public boolean deleteNote(Long id) {
+        Assert.notNull(id, "The parameter id is required");
+        noteMapper.toRecycle(id);
+        return true;
     }
 }

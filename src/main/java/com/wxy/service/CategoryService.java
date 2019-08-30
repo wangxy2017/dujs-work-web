@@ -31,5 +31,5 @@ public interface CategoryService {
      *
      * @param id
      */
-    void deleteCategory(Long id);
+    boolean deleteCategory(Long id);
 }

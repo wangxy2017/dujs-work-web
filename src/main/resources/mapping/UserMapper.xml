@@ -18,4 +18,15 @@
         <if test="username != null and username != ''">and username = #{username}</if>
         <if test="email != null and email != ''">and email = #{email}</if>
     </select>
+
+    <update id="update" parameterType="user">
+        update sys_user
+        <set>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="salt != null and salt != ''">salt = #{salt},</if>
+            <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
+            <if test="email != null and email != ''">email = #{email},</if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

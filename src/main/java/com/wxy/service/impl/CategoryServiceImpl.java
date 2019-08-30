@@ -27,7 +27,11 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category();
         category.setName(name);
         category.setUserId(userId);
-        return categoryMapper.save(category);
+        List<Category> list = categoryMapper.queryList(category);
+        if (list.size() == 0) {
+            return categoryMapper.save(category);
+        }
+        throw new RuntimeException("分类已存在");
     }
 
     @Override
@@ -39,10 +43,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategory(Long id) {
+    public boolean deleteCategory(Long id) {
         Assert.notNull(id, "The parameter id is required");
         categoryMapper.delete(id);
-        // 更新分类下面的笔记
-        categoryMapper.resetNoteCategory(id);
+        // 重置默认分类
+//        categoryMapper.resetNoteCategory(id);
+        return true;
     }
 }

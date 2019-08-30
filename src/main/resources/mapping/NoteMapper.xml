@@ -5,11 +5,28 @@
 <mapper namespace="com.wxy.mapper.NoteMapper">
 
     <insert id="save" parameterType="note" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_note(title,content,password)
-        values(#{title},#{content},#{password})
+        insert into sys_note(title,content,password,category_id,user_id)
+        values(#{title},#{content},#{password},#{categoryId},#{userId})
     </insert>
 
     <select id="queryById" parameterType="long" resultType="note">
         select * from sys_note where id = #{id}
+    </select>
+
+    <update id="update" parameterType="note">
+        update sys_note
+        <set>
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="queryList" parameterType="note" resultType="note">
+        select * from sys_note where 1 =1
+        <if test="userId != null">and user_id = #{userId}</if>
+        <if test="categoryId != null">and category_id = #{categoryId}</if>
     </select>
 </mapper>
