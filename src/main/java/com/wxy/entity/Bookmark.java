@@ -10,7 +10,20 @@ import lombok.Data;
  **/
 @Data
 public class Bookmark extends BaseEntity {
+    /**
+     * 图标
+     */
     private String icon;
+    /**
+     * 链接
+     */
     private String href;
+    /**
+     * 名称
+     */
     private String name;
+    /**
+     * 用户id
+     */
+    private Long userId;
 }

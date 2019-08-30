@@ -1,10 +1,14 @@
 package com.wxy.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wxy.entity.Bookmark;
 import com.wxy.mapper.BookmarkMapper;
 import com.wxy.service.BookmarkService;
+import com.wxy.util.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -28,8 +32,22 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public List<Bookmark> queryList(Bookmark bookmark) {
-        return bookmarkMapper.queryList(bookmark);
+    public PageModel<Bookmark> queryPageList(Long userId, String name, Integer pageNum, Integer pageSize) {
+        Assert.isNull(userId, "The parameter userId is required");
+        Assert.isNull(pageNum, "The parameter pageNum is required");
+        Assert.isNull(pageSize, "The parameter pageSize is required");
+        PageHelper.startPage(pageNum, pageSize);
+
+        Bookmark bookmark = new Bookmark();
+        bookmark.setUserId(userId);
+        bookmark.setName(name);
+        PageInfo<Bookmark> pageInfo = new PageInfo<>(bookmarkMapper.queryList(bookmark));
+        return new PageModel(pageInfo);
     }
 
+    @Override
+    public void deleteAll(Long userId) {
+        Assert.isNull(userId, "The parameter userId is required");
+        bookmarkMapper.deleteByUserId(userId);
+    }
 }

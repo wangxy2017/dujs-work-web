@@ -1,6 +1,7 @@
 package com.wxy.service;
 
 import com.wxy.entity.Bookmark;
+import com.wxy.util.PageModel;
 
 import java.util.List;
 
@@ -11,7 +12,29 @@ import java.util.List;
  **/
 public interface BookmarkService {
 
+    /**
+     * 批量插入书签
+     *
+     * @param list
+     * @return
+     */
     int saveBookmarkByBatch(List<Bookmark> list);
 
-    List<Bookmark> queryList(Bookmark bookmark);
+    /**
+     * 分页查询书签列表
+     *
+     * @param userId
+     * @param name
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageModel<Bookmark> queryPageList(Long userId, String name, Integer pageNum, Integer pageSize);
+
+    /**
+     * 清空书签
+     *
+     * @param userId
+     */
+    void deleteAll(Long userId);
 }
