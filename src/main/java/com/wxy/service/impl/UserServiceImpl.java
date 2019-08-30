@@ -26,10 +26,14 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(email, "The parameter email is required");
         User user = new User();
         user.setUsername(username);
-        user.setSalt(MD5Utils.getSalt(8));
-        user.setPassword(MD5Utils.MD5Encode(password, user.getSalt()));
-        user.setEmail(email);
-        return userMapper.save(user);
+        User user1 = userMapper.queryByProperties(user);
+        if (user1 == null) {
+            user.setSalt(MD5Utils.getSalt(8));
+            user.setPassword(MD5Utils.MD5Encode(password, user.getSalt()));
+            user.setEmail(email);
+            return userMapper.save(user);
+        }
+        throw new RuntimeException("用户已存在");
     }
 
     @Override
@@ -43,6 +47,14 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(username, "The parameter username is required");
         User user = new User();
         user.setUsername(username);
+        return userMapper.queryByProperties(user);
+    }
+
+    @Override
+    public User queryByEmail(String email) {
+        Assert.notNull(email, "The parameter email is required");
+        User user = new User();
+        user.setEmail(email);
         return userMapper.queryByProperties(user);
     }
 }
