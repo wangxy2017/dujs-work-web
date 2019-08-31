@@ -4,10 +4,10 @@ import com.wxy.constanst.CategoryConstants;
 import com.wxy.entity.Category;
 import com.wxy.mapper.CategoryMapper;
 import com.wxy.service.CategoryService;
-import com.wxy.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,9 +24,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    @Autowired
-    private NoteService noteService;
-
     @Override
     public int saveCategory(String name, Long userId) {
         Assert.hasText(name, "The parameter name is required");
@@ -35,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
         category.setName(name);
         category.setUserId(userId);
         List<Category> list = categoryMapper.queryList(category);
-        if (list.size() == 0) {
+        if (CollectionUtils.isEmpty(list)) {
             return categoryMapper.save(category);
         }
         throw new RuntimeException("分类已存在");
