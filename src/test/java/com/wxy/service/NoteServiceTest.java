@@ -77,7 +77,8 @@ public class NoteServiceTest {
     @Test
     public void TestDeleteNote() {
         Long id = 1L;
-        boolean bool = noteService.deleteNote(id);
+        Long userId = 4L;
+        boolean bool = noteService.deleteNote(id,userId);
         log.info("删除笔记；bool = {}", bool);
     }
 }

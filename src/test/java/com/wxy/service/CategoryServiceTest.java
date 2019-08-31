@@ -40,7 +40,7 @@ public class CategoryServiceTest {
     @Test
     public void TestFindAll() {
         Long userId = 4L;
-        List<Category> list = categoryService.findAll(userId);
+        List<Category> list = categoryService.findAll(userId,null);
         log.info("查询所有分类：list = {}", list);
     }
 

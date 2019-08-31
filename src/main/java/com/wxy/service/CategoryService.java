@@ -24,7 +24,7 @@ public interface CategoryService {
      *
      * @return
      */
-    List<Category> findAll(Long userId);
+    List<Category> findAll(Long userId,String name);
 
     /**
      * 删除分类

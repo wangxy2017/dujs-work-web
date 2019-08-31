@@ -1,7 +1,10 @@
 package com.wxy.service.impl;
 
+import com.wxy.constanst.CategoryConstants;
+import com.wxy.entity.Category;
 import com.wxy.entity.Note;
 import com.wxy.mapper.NoteMapper;
+import com.wxy.service.CategoryService;
 import com.wxy.service.NoteService;
 import com.wxy.util.AESUtils;
 import com.wxy.util.MD5Utils;
@@ -21,6 +24,8 @@ public class NoteServiceImpl implements NoteService {
 
     @Autowired
     private NoteMapper noteMapper;
+
+    private CategoryService categoryService;
 
     @Override
     public int saveNote(String title, String content, Long categoryId, Long userId) {
@@ -73,9 +78,16 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public boolean deleteNote(Long id) {
+    public boolean deleteNote(Long id, Long userId) {
         Assert.notNull(id, "The parameter id is required");
-        noteMapper.toRecycle(id);
-        return true;
+        Assert.notNull(userId, "The parameter userId is required");
+        List<Category> list = categoryService.findAll(userId, CategoryConstants.RECYCLE);
+        if (list != null && list.size() == 1) {
+            Note note = new Note();
+            note.setId(id);
+            note.setCategoryId(list.get(0).getId());
+            return noteMapper.update(note) > 0;
+        }
+        throw new RuntimeException("数据异常");
     }
 }

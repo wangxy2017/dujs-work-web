@@ -35,10 +35,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAll(Long userId) {
+    public List<Category> findAll(Long userId,String name) {
         Assert.notNull(userId, "The parameter userId is required");
         Category category = new Category();
         category.setUserId(userId);
+        category.setName(name);
         return categoryMapper.queryList(category);
     }
 

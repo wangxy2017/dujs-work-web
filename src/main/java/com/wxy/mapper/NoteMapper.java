@@ -6,11 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NoteMapper extends BaseMapper<Note> {
-    /**
-     * 放入回收站
-     *
-     * @param id
-     * @return
-     */
-    int toRecycle(Long id);
 }

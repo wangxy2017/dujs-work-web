@@ -112,8 +112,12 @@ public class NoteController {
      */
     @ApiOperation(value = "删除笔记", notes = "删除笔记")
     @DeleteMapping("/{id}")
-    public ApiResponse delete(@PathVariable Long id) {
-        noteService.deleteNote(id);
+    public ApiResponse delete(@ApiIgnore HttpServletRequest request, @PathVariable Long id) {
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        if (loginUser == null) {
+            throw new RuntimeException("未登录");
+        }
+        noteService.deleteNote(id, loginUser.getId());
         return ApiResponse.success();
     }
 }

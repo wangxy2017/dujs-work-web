@@ -47,7 +47,7 @@ public class CategoryController {
         if (loginUser == null) {
             throw new RuntimeException("未登录");
         }
-        List<Category> list = categoryService.findAll(loginUser.getId());
+        List<Category> list = categoryService.findAll(loginUser.getId(), null);
         return ApiResponse.success(list);
     }
 
