@@ -1,5 +1,7 @@
 package com.wxy.core;
 
+import com.github.pagehelper.Page;
+
 import java.util.List;
 
 public interface BaseMapper<T> {
@@ -50,5 +52,13 @@ public interface BaseMapper<T> {
      * @return
      */
     T queryById(Long id);
+
+    /**
+     * 分页查询
+     *
+     * @param t
+     * @return
+     */
+    Page<T> queryPageList(T t);
 }
 

@@ -18,7 +18,7 @@
     </insert>
 
 
-    <select id="queryList" resultType="bookmark" parameterType="bookmark">
+    <select id="queryPageList" resultType="bookmark" parameterType="bookmark">
         select * from sys_bookmark where 1=1
         <if test="userId != null">and user_id = #{userId}</if>
         <if test="name != null and name != ''">and name like concat("%",#{name},"%")</if>

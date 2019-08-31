@@ -1,5 +1,6 @@
 package com.wxy.util;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import lombok.Data;
 
@@ -29,10 +30,10 @@ public class PageModel<T> {
      */
     private List<T> list;
 
-    public PageModel(PageInfo<T> pageInfo) {
-        this.pageNum = pageInfo.getPageNum();
-        this.pageSize = pageInfo.getPageSize();
-        this.total = pageInfo.getTotal();
-        this.list = pageInfo.getList();
+    public PageModel(Page<T> page) {
+        this.pageNum = page.getPageNum();
+        this.pageSize = page.getPageSize();
+        this.total = page.getTotal();
+        this.list = page.subList(0, page.size());
     }
 }

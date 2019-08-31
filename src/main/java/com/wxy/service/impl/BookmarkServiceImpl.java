@@ -1,5 +1,6 @@
 package com.wxy.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wxy.entity.Bookmark;
@@ -42,9 +43,8 @@ public class BookmarkServiceImpl implements BookmarkService {
         Bookmark bookmark = new Bookmark();
         bookmark.setUserId(userId);
         bookmark.setName(name);
-        List<Bookmark> list = bookmarkMapper.queryList(bookmark);
-        PageInfo<Bookmark> pageInfo = new PageInfo<>(list);
-        return new PageModel(pageInfo);
+        Page<Bookmark> page = bookmarkMapper.queryPageList(bookmark);
+        return new PageModel(page);
     }
 
     @Override
