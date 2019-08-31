@@ -24,12 +24,28 @@ public interface CategoryService {
      *
      * @return
      */
-    List<Category> findAll(Long userId,String name);
+    List<Category> findAll(Long userId, String name);
 
     /**
      * 删除分类
      *
      * @param id
      */
-    boolean deleteCategory(Long id);
+    boolean deleteCategory(Long id, Long userId);
+
+    /**
+     * 查询回收站
+     *
+     * @param userId
+     * @return
+     */
+    Category findRecycle(Long userId);
+
+    /**
+     * 查询默认分类
+     *
+     * @param userId
+     * @return
+     */
+    Category findDefault(Long userId);
 }

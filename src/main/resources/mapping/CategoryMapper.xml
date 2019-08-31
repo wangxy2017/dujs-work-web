@@ -18,4 +18,8 @@
     <delete id="delete" parameterType="long">
         delete from sys_category where id = #{id}
     </delete>
+
+    <update id="resetNoteCategory" parameterType="map">
+        update sys_note set category_id = #{refId} where category_id = #{currId}
+    </update>
 </mapper>
