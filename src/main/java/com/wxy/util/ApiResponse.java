@@ -36,8 +36,8 @@ public class ApiResponse {
         return new ApiResponse(code, msg, null);
     }
 
-    public static ApiResponse success(String msg) {
-        return new ApiResponse(DEFAULT_SUCCESS_CODE, msg, null);
+    public static ApiResponse success(Integer code, String msg, Object data) {
+        return new ApiResponse(code, msg, data);
     }
 
     public static ApiResponse error() {
@@ -48,8 +48,5 @@ public class ApiResponse {
         return new ApiResponse(code, msg, null);
     }
 
-    public static ApiResponse error(String msg) {
-        return new ApiResponse(DEFAULT_ERROR_CODE, msg, null);
-    }
 }
 

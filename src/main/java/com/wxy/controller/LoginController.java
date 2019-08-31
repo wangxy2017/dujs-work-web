@@ -5,14 +5,18 @@ import com.wxy.request.UserParam;
 import com.wxy.service.UserService;
 import com.wxy.util.ApiResponse;
 import com.wxy.util.MD5Utils;
+import com.wxy.util.TokenHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author wxy
@@ -31,31 +35,19 @@ public class LoginController {
     /**
      * 登录
      *
-     * @param request
      * @param user
      * @return
      */
     @ApiOperation(value = "登录", notes = "登录")
     @PostMapping("/login")
-    public ApiResponse login(@ApiIgnore HttpServletRequest request, @RequestBody UserParam user) {
+    public ApiResponse login(@RequestBody UserParam user) {
         User user1 = userService.queryByUsername(user.getUsername());
         if (user1 != null && user1.getPassword().equals(MD5Utils.MD5Encode(user.getPassword(), user1.getSalt()))) {
-            request.getSession().setAttribute("loginUser", user1);
-            return ApiResponse.success();
+            String token = TokenHelper.createToken(user1.getUsername(), user1.getId());
+            Map<String, String> data = new HashMap<>();
+            data.put("token", token);
+            return ApiResponse.success(data);
         }
-        return ApiResponse.error("用户名或密码错误");
-    }
-
-    /**
-     * 注销
-     *
-     * @param request
-     * @return
-     */
-    @ApiOperation(value = "注销", notes = "注销")
-    @GetMapping("/logout")
-    public ApiResponse logout(@ApiIgnore HttpServletRequest request) {
-        request.getSession().setAttribute("loginUser", null);
-        return ApiResponse.success();
+        return ApiResponse.error(-1,"用户名或密码错误");
     }
 }
