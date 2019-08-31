@@ -18,6 +18,6 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ApiResponse exceptionHandle(Exception e) {
         e.printStackTrace();
-        return ApiResponse.error(500, "系统异常");
+        return ApiResponse.error(500, e.getMessage());
     }
 }
