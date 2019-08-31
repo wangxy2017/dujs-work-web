@@ -59,8 +59,12 @@ public class CategoryController {
      */
     @ApiOperation(value = "删除分类", notes = "删除分类")
     @DeleteMapping("/{id}")
-    public ApiResponse delete(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
+    public ApiResponse delete(@ApiIgnore HttpServletRequest request,@PathVariable Long id) {
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        if (loginUser == null) {
+            throw new RuntimeException("未登录");
+        }
+        categoryService.deleteCategory(id,loginUser.getId());
         return ApiResponse.success();
     }
 }

@@ -50,7 +50,8 @@ public class CategoryServiceTest {
     @Test
     public void TestDeleteCategory() {
         Long id = 1L;
-        boolean bool = categoryService.deleteCategory(id);
+        Long userId = 4L;
+        boolean bool = categoryService.deleteCategory(id,userId);
         log.info("删除分类；bool = {}", bool);
     }
 }

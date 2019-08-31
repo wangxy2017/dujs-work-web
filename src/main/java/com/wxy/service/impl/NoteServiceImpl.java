@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author wxy
@@ -60,7 +61,11 @@ public class NoteServiceImpl implements NoteService {
         Note note = new Note();
         note.setUserId(userId);
         note.setCategoryId(categoryId);
-        return noteMapper.queryList(note);
+        List<Note> list = noteMapper.queryList(note);
+        // 过滤回收站
+        Category recycle = categoryService.findRecycle(userId);
+        list.stream().filter(n -> n.getCategoryId().equals(recycle.getId())).collect(Collectors.toList());
+        return list;
     }
 
     @Override
