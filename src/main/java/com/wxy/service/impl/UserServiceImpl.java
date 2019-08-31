@@ -10,8 +10,10 @@ import com.wxy.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -63,10 +65,10 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(username);
         List<User> list = userMapper.queryList(user);
-        if (list.size() == 1) {
+        if (!CollectionUtils.isEmpty(list)) {
             return list.get(0);
         }
-        throw new RuntimeException("查询错误");
+        return null;
     }
 
     @Override
@@ -75,10 +77,10 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setEmail(email);
         List<User> list = userMapper.queryList(user);
-        if (list.size() == 1) {
+        if (!CollectionUtils.isEmpty(list)) {
             return list.get(0);
         }
-        throw new RuntimeException("查询错误");
+        return null;
     }
 
     @Override

@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler()
     @ResponseBody
     public ApiResponse exceptionHandle(Exception e) {
-        log.error(e.getLocalizedMessage());
+        e.printStackTrace();
         return ApiResponse.error(500, "系统异常");
     }
 }
