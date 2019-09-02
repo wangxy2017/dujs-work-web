@@ -52,7 +52,7 @@ public class NoteController {
     public ApiResponse content(@PathVariable Long id) {
         Note note = noteService.queryById(id);
         if (note != null) {
-            return ApiResponse.success(note.getContent());
+            return ApiResponse.success(note);
         }
         return ApiResponse.error(-1, "查询出错");
     }
