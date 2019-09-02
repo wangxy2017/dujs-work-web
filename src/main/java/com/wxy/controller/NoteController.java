@@ -66,7 +66,7 @@ public class NoteController {
     @ApiOperation(value = "查询所有笔记", notes = "查询所有笔记")
     @GetMapping("/findAll/{category_id}")
     public ApiResponse findAll(@PathVariable(required = false) Long category_id) {
-        List<Note> list = noteService.findAll(TokenHelper.getUserId(), category_id);
+        List<Note> list = noteService.findAll(TokenHelper.getUserId(), category_id == 0 ? null : category_id);
         return ApiResponse.success(list);
     }
 

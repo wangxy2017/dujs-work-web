@@ -26,6 +26,7 @@ public class NoteServiceImpl implements NoteService {
     @Autowired
     private NoteMapper noteMapper;
 
+    @Autowired
     private CategoryService categoryService;
 
     @Override
