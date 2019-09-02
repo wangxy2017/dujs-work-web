@@ -99,10 +99,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUser(Long userId, String email, String nickName) {
-        Assert.notNull(userId, "The parameter userId is required");
+        Assert.notNull(userId, "1The parameter userId is required");
         if (StringUtils.hasText(email)) {
             User user1 = queryByEmail(email);
-            if (user1 != null) {
+            if (user1 != null && !user1.getId().equals(userId)) {
                 throw new RuntimeException("邮箱已存在");
             }
         }

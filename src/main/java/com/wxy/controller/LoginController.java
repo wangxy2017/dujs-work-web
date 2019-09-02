@@ -44,10 +44,11 @@ public class LoginController {
         User user1 = userService.queryByUsername(user.getUsername());
         if (user1 != null && user1.getPassword().equals(MD5Utils.MD5Encode(user.getPassword(), user1.getSalt()))) {
             String token = TokenHelper.createToken(user1.getUsername(), user1.getId());
-            Map<String, String> data = new HashMap<>();
+            Map<String, Object> data = new HashMap<>();
             data.put("token", token);
+            data.put("userId", user1.getId());
             return ApiResponse.success(data);
         }
-        return ApiResponse.error(-1,"用户名或密码错误");
+        return ApiResponse.error(-1, "用户名或密码错误");
     }
 }

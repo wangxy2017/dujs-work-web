@@ -40,8 +40,9 @@ public class RegisterController {
         if (userService.saveUser(user.getUsername(), user.getPassword(), user.getEmail()) > 0) {
             User user1 = userService.queryByUsername(user.getUsername());
             String token = TokenHelper.createToken(user1.getUsername(), user1.getId());
-            Map<String, String> data = new HashMap<>();
+            Map<String, Object> data = new HashMap<>();
             data.put("token", token);
+            data.put("userId", user1.getId());
             return ApiResponse.success(1, "注册成功", data);
         }
         return ApiResponse.error(-1, "注册失败");
