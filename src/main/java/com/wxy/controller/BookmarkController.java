@@ -34,7 +34,7 @@ public class BookmarkController {
     private BookmarkService bookmarkService;
 
     @ApiOperation(value = "导入书签", notes = "导入书签")
-    @PutMapping
+    @PostMapping("/upload")
     public ApiResponse upload(@RequestParam("file") MultipartFile file) throws IOException {
         log.info("上传文件：file = {}", file.getOriginalFilename());
         if (file.getOriginalFilename().endsWith(".html")) {
