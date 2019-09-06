@@ -65,7 +65,7 @@ public class NoteServiceImpl implements NoteService {
         List<Note> list = noteMapper.queryList(note);
         // 过滤回收站
         Category recycle = categoryService.findRecycle(userId);
-        return list.stream().filter(n -> n.getCategoryId().equals(recycle.getId())).collect(Collectors.toList());
+        return list.stream().filter(n -> !n.getCategoryId().equals(recycle.getId())).collect(Collectors.toList());
     }
 
     @Override

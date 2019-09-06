@@ -65,8 +65,8 @@ public class NoteServiceTest {
      */
     @Test
     public void TestFindAll() {
-        Long userId = 4L;
-        Long categoryId = 2L;
+        Long userId = 1L;
+        Long categoryId = null;
         List<Note> list = noteService.findAll(userId, categoryId);
         log.info("查询笔记列表；list = {}", list);
     }
