@@ -19,7 +19,7 @@ CREATE TABLE `sys_bookmark` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` int(1) NOT NULL DEFAULT '0',
-  `icon` varchar(2000) NOT NULL,
+  `icon` text NOT NULL,
   `href` varchar(200) NOT NULL,
   `name` varchar(200) NOT NULL,
   `user_id` bigint(20) NOT NULL,
