@@ -78,7 +78,14 @@ public class NoteServiceTest {
     public void TestDeleteNote() {
         Long id = 1L;
         Long userId = 4L;
-        boolean bool = noteService.deleteNote(id,userId);
+        boolean bool = noteService.deleteNote(id, userId);
         log.info("删除笔记；bool = {}", bool);
+    }
+
+    @Test
+    public void TestFindRecycleList() {
+        Long userId = 7L;
+        List<Note> list = noteService.findRecycleList(userId);
+        log.info("查询回收站笔记：list = {}", list);
     }
 }

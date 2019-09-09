@@ -53,6 +53,13 @@ public interface NoteService {
      *
      * @param id
      */
-    boolean deleteNote(Long id,Long userId);
+    boolean deleteNote(Long id, Long userId);
+
+    /**
+     * 查询回收站笔记
+     *
+     * @return
+     */
+    List<Note> findRecycleList(Long userId);
 
 }

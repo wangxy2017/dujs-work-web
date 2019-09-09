@@ -95,4 +95,17 @@ public class NoteServiceImpl implements NoteService {
         }
         throw new RuntimeException("数据异常");
     }
+
+    @Override
+    public List<Note> findRecycleList(Long userId) {
+        Assert.notNull(userId, "The parameter userId is required");
+        Category recycle = categoryService.findRecycle(userId);
+        if (recycle != null) {
+            Note note = new Note();
+            note.setCategoryId(recycle.getId());
+            note.setUserId(userId);
+            return noteMapper.queryList(note);
+        }
+        return null;
+    }
 }

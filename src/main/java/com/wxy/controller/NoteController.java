@@ -98,4 +98,14 @@ public class NoteController {
         noteService.deleteNote(id, TokenHelper.getUserId());
         return ApiResponse.success();
     }
+
+    /**
+     * 查询回收站笔记
+     * @return
+     */
+    @ApiOperation(value = "回收站笔记", notes = "回收站笔记")
+    @GetMapping("/recycle")
+    public ApiResponse recycle() {
+        return ApiResponse.success(noteService.findRecycleList(TokenHelper.getUserId()));
+    }
 }
