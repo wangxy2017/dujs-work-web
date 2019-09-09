@@ -29,4 +29,8 @@
         <if test="userId != null">and user_id = #{userId}</if>
         <if test="categoryId != null">and category_id = #{categoryId}</if>
     </select>
+
+    <delete id="cleanRecycle" parameterType="map">
+        delete from sys_note where user_id = #{userId} and category_id = #{recycleId}
+    </delete>
 </mapper>

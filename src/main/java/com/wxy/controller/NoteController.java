@@ -109,4 +109,20 @@ public class NoteController {
     public ApiResponse recycle() {
         return ApiResponse.success(noteService.findRecycleList(TokenHelper.getUserId()));
     }
+
+    /**
+     * 清空回收站
+     *
+     * @return
+     */
+    @ApiOperation(value = "清空回收站", notes = "清空回收站")
+    @GetMapping("/clean")
+    public ApiResponse clean() {
+        boolean bool = noteService.cleanRecycle(TokenHelper.getUserId());
+        if (bool) {
+            return ApiResponse.success();
+        }
+        return ApiResponse.error();
+    }
+
 }

@@ -62,4 +62,11 @@ public interface NoteService {
      */
     List<Note> findRecycleList(Long userId);
 
+    /**
+     * 清空回收站
+     *
+     * @param userId
+     * @return
+     */
+    boolean cleanRecycle(Long userId);
 }

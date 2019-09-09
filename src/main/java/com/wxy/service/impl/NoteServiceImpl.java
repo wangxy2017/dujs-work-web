@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -107,5 +109,19 @@ public class NoteServiceImpl implements NoteService {
             return noteMapper.queryList(note);
         }
         return null;
+    }
+
+    @Override
+    public boolean cleanRecycle(Long userId) {
+        Assert.notNull(userId, "The parameter userId is required");
+        Category recycle = categoryService.findRecycle(userId);
+        if (recycle != null) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("userId", userId);
+            params.put("recycleId", recycle.getId());
+            noteMapper.cleanRecycle(params);
+            return true;
+        }
+        return false;
     }
 }
