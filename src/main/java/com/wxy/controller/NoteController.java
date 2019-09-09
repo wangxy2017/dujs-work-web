@@ -79,7 +79,7 @@ public class NoteController {
     @ApiOperation(value = "修改笔记", notes = "修改笔记")
     @PostMapping("/update")
     public ApiResponse update(@RequestBody NoteParam note) {
-        int i = noteService.updateNote(TokenHelper.getUserId(), note.getTitle(), note.getContent(), note.getCategory_id());
+        int i = noteService.updateNote(note.getId(), note.getTitle(), note.getContent(), note.getCategory_id());
         if (i > 0) {
             return ApiResponse.success();
         }
@@ -101,6 +101,7 @@ public class NoteController {
 
     /**
      * 查询回收站笔记
+     *
      * @return
      */
     @ApiOperation(value = "回收站笔记", notes = "回收站笔记")

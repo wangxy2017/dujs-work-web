@@ -9,6 +9,8 @@ import lombok.Data;
  **/
 @Data
 public class NoteParam {
+
+    private Long id;
     /**
      * 标题
      */

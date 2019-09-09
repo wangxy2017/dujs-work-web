@@ -44,9 +44,9 @@ public class BookmarkController {
             Elements elements = document.getElementsByTag("A");
             elements.forEach(a -> {
                 Bookmark b = new Bookmark();
-                b.setIcon("123");
+                b.setIcon(a.attr("ICON"));
                 b.setHref(a.attr("HREF"));
-                b.setName(a.html());
+                b.setName(a.text());
                 b.setUserId(TokenHelper.getUserId());
                 bookmarks.add(b);
             });
