@@ -120,13 +120,13 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(email, "The parameter email is required");
         User user = queryByEmail(email);
         if (user != null) {
-            String newPwd = "";
+            String newPwd = MD5Utils.getSalt(8);
             user.setSalt(MD5Utils.getSalt(8));
             user.setPassword(MD5Utils.MD5Encode(newPwd, user.getSalt()));
             userMapper.update(user);
             // 发送邮件
             try {
-                EmailUtils.sendEmail(email, "忘记密码", newPwd);
+                EmailUtils.sendEmail(email, "重置密码", "新密码：" + newPwd);
                 return true;
             } catch (MessagingException e) {
                 e.printStackTrace();
