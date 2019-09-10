@@ -35,4 +35,12 @@ public interface UserService {
      * @return
      */
     int updateUser(Long userId, String email, String nickName);
+
+    /**
+     * 忘记密码
+     *
+     * @param email
+     * @return
+     */
+    boolean forgotPassword(String email);
 }

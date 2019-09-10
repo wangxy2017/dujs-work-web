@@ -6,6 +6,7 @@ import com.wxy.entity.User;
 import com.wxy.mapper.UserMapper;
 import com.wxy.service.CategoryService;
 import com.wxy.service.UserService;
+import com.wxy.util.EmailUtils;
 import com.wxy.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.mail.MessagingException;
 import java.util.Collections;
 import java.util.List;
 
@@ -111,5 +113,26 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         user.setNickName(nickName);
         return userMapper.update(user);
+    }
+
+    @Override
+    public boolean forgotPassword(String email) {
+        Assert.hasText(email, "The parameter email is required");
+        User user = queryByEmail(email);
+        if (user != null) {
+            String newPwd = "";
+            user.setSalt(MD5Utils.getSalt(8));
+            user.setPassword(MD5Utils.MD5Encode(newPwd, user.getSalt()));
+            userMapper.update(user);
+            // 发送邮件
+            try {
+                EmailUtils.sendEmail(email, "忘记密码", newPwd);
+                return true;
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                throw new RuntimeException("发送失败");
+            }
+        }
+        return false;
     }
 }

@@ -10,10 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,5 +47,21 @@ public class LoginController {
             return ApiResponse.success(data);
         }
         return ApiResponse.error(-1, "用户名或密码错误");
+    }
+
+    /**
+     * 忘记密码
+     *
+     * @param email
+     * @return
+     */
+    @ApiOperation(value = "忘记密码", notes = "忘记密码")
+    @PostMapping("/forgot")
+    public ApiResponse forgot(@RequestParam String email) {
+        boolean bool = userService.forgotPassword(email);
+        if (bool) {
+            return ApiResponse.success();
+        }
+        return ApiResponse.error();
     }
 }
