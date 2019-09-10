@@ -56,7 +56,7 @@ public class LoginController {
      * @return
      */
     @ApiOperation(value = "忘记密码", notes = "忘记密码")
-    @PostMapping("/forgot")
+    @GetMapping("/forgot")
     public ApiResponse forgot(@RequestParam String username, @RequestParam String email) {
         boolean bool = userService.forgotPassword(username, email);
         if (bool) {
