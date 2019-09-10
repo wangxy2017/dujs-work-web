@@ -42,5 +42,5 @@ public interface UserService {
      * @param email
      * @return
      */
-    boolean forgotPassword(String email);
+    boolean forgotPassword(String username, String email);
 }

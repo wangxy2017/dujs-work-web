@@ -57,8 +57,8 @@ public class LoginController {
      */
     @ApiOperation(value = "忘记密码", notes = "忘记密码")
     @PostMapping("/forgot")
-    public ApiResponse forgot(@RequestParam String email) {
-        boolean bool = userService.forgotPassword(email);
+    public ApiResponse forgot(@RequestParam String username, @RequestParam String email) {
+        boolean bool = userService.forgotPassword(username, email);
         if (bool) {
             return ApiResponse.success();
         }

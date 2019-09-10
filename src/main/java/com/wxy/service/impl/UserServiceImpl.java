@@ -116,10 +116,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean forgotPassword(String email) {
+    public boolean forgotPassword(String username, String email) {
+        Assert.hasText(username, "The parameter username is required");
         Assert.hasText(email, "The parameter email is required");
-        User user = queryByEmail(email);
-        if (user != null) {
+        User user = queryByUsername(username);
+        if (user != null && user.getEmail().equals(email)) {
             String newPwd = MD5Utils.getSalt(8);
             user.setSalt(MD5Utils.getSalt(8));
             user.setPassword(MD5Utils.MD5Encode(newPwd, user.getSalt()));
