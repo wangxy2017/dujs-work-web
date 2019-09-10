@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(email, "The parameter email is required");
         User user = queryByUsername(username);
         if (user != null && user.getEmail().equals(email)) {
-            String newPwd = MD5Utils.getSalt(8);
+            String newPwd = MD5Utils.getSalt(10);
             user.setSalt(MD5Utils.getSalt(8));
             user.setPassword(MD5Utils.MD5Encode(newPwd, user.getSalt()));
             userMapper.update(user);
