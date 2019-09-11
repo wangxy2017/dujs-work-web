@@ -1,6 +1,7 @@
 package com.wxy.controller;
 
 import com.wxy.entity.Category;
+import com.wxy.request.CategoryParam;
 import com.wxy.service.CategoryService;
 import com.wxy.util.ApiResponse;
 import com.wxy.util.TokenHelper;
@@ -50,7 +51,20 @@ public class CategoryController {
     @ApiOperation(value = "删除分类", notes = "删除分类")
     @DeleteMapping("/{id}")
     public ApiResponse delete(@PathVariable Long id) {
-        categoryService.deleteCategory(id,TokenHelper.getUserId());
+        categoryService.deleteCategory(id, TokenHelper.getUserId());
+        return ApiResponse.success();
+    }
+
+    /**
+     * 修改分类
+     *
+     * @param category
+     * @return
+     */
+    @ApiOperation(value = "修改分类", notes = "修改分类")
+    @PostMapping("/update")
+    public ApiResponse delete(@RequestBody CategoryParam category) {
+        categoryService.updateCategory(category.getId(), category.getName());
         return ApiResponse.success();
     }
 }

@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class CategoryServiceTest {
     @Test
     public void TestFindAll() {
         Long userId = 4L;
-        List<Category> list = categoryService.findAll(userId,null);
+        List<Category> list = categoryService.findAll(userId, null);
         log.info("查询所有分类：list = {}", list);
     }
 
@@ -51,7 +52,15 @@ public class CategoryServiceTest {
     public void TestDeleteCategory() {
         Long id = 1L;
         Long userId = 4L;
-        boolean bool = categoryService.deleteCategory(id,userId);
+        boolean bool = categoryService.deleteCategory(id, userId);
         log.info("删除分类；bool = {}", bool);
+    }
+
+    @Test
+    public void testUpdateCategory() {
+        Long id = 0L;
+        String name = "123";
+        int update = categoryService.updateCategory(id, name);
+        log.info("修改分类：update = {}", update > 0);
     }
 }

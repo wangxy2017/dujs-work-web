@@ -48,4 +48,12 @@ public interface CategoryService {
      * @return
      */
     Category findDefault(Long userId);
+
+    /**
+     * 修改分类
+     * @param id
+     * @param name
+     * @return
+     */
+    int updateCategory(Long id, String name);
 }

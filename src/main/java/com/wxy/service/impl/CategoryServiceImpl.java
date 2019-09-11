@@ -83,4 +83,16 @@ public class CategoryServiceImpl implements CategoryService {
         }
         throw new RuntimeException("数据异常");
     }
+
+    @Override
+    public int updateCategory(Long id, String name) {
+        Assert.notNull(id, "The parameter id is required");
+        Assert.hasText(name, "The parameter name is required");
+        Category c = categoryMapper.queryById(id);
+        if (c != null && !c.getName().equals(CategoryConstants.RECYCLE) && !c.getName().equals(CategoryConstants.DEFAULT)) {
+            c.setName(name);
+            return categoryMapper.update(c);
+        }
+        throw new RuntimeException("修改异常");
+    }
 }
