@@ -55,13 +55,17 @@ public class CategoryServiceImpl implements CategoryService {
     public boolean deleteCategory(Long id, Long userId) {
         Assert.notNull(id, "The parameter id is required");
         Assert.notNull(userId, "The parameter userId is required");
-        categoryMapper.delete(id);
-        // 重置默认分类
-        Map<String, Object> param = new HashMap<>();
-        param.put("currId", id);
-        param.put("refId", findDefault(userId));
-        categoryMapper.resetNoteCategory(param);
-        return true;
+        Category c = categoryMapper.queryById(id);
+        if (c != null && !c.getName().equals(CategoryConstants.RECYCLE) && !c.getName().equals(CategoryConstants.DEFAULT)) {
+            categoryMapper.delete(id);
+            // 重置默认分类
+            Map<String, Object> param = new HashMap<>();
+            param.put("currId", id);
+            param.put("refId", findDefault(userId));
+            categoryMapper.resetNoteCategory(param);
+            return true;
+        }
+        return false;
     }
 
     @Override
