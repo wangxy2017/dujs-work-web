@@ -20,7 +20,7 @@ public interface CategoryService {
     int saveCategory(String name, Long userId);
 
     /**
-     * 查询列表
+     * 查询分类列表
      *
      * @return
      */

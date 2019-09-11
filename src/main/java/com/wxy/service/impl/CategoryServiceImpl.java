@@ -12,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author wxy
@@ -44,7 +45,10 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category();
         category.setUserId(userId);
         category.setName(name);
-        return categoryMapper.queryList(category);
+        // 过滤回收站
+        List<Category> list = categoryMapper.queryList(category);
+        return list.stream().filter(n -> !n.getName().equals(CategoryConstants.RECYCLE)).collect(Collectors.toList());
+
     }
 
     @Override
