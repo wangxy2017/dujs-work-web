@@ -26,17 +26,17 @@ public class EmailUtils {
     @Value("${mail.password}")
     private String password;
     @Value("${mail.debug}")
-    private boolean debug;
+    private String debug;
 
     /**
      * 发送邮件
      *
-     * @param path
+     * @param emails
      * @param title
-     * @param msg
+     * @param content
      * @throws MessagingException
      */
-    public void sendEmail(String path, String title, String msg) throws MessagingException {//path是指你要发给哪个邮箱号，title是指你的邮件的标题。msg是指你的邮件的内容。
+    public void sendEmail(String emails, String title, String content) throws MessagingException {//path是指你要发给哪个邮箱号，title是指你的邮件的标题。msg是指你的邮件的内容。
 
         Properties properties = new Properties();
         properties.put("mail.transport.protocol", "smtp");// 连接协议，即：邮件协议
@@ -52,12 +52,12 @@ public class EmailUtils {
         // 设置发件人邮箱地址
         message.setFrom(new InternetAddress(username));
         // 设置收件人邮箱地址
-        message.setRecipients(Message.RecipientType.TO, new InternetAddress[]{new InternetAddress(path)});
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emails));
         //message.setRecipient(Message.RecipientType.TO, new InternetAddress("xxx@qq.com"));//一个收件人
         // 设置邮件标题
         message.setSubject(title);
         // 设置邮件内容
-        message.setText(msg);
+        message.setText(content);
         // 得到邮差对象
         Transport transport = session.getTransport();
         // 连接自己的邮箱账户
