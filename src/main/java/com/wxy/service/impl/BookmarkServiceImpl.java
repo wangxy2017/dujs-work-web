@@ -44,7 +44,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         bookmark.setUserId(userId);
         bookmark.setName(name);
         Page<Bookmark> page = bookmarkMapper.queryPageList(bookmark);
-        return new PageModel(page);
+        return new PageModel<>(page);
     }
 
     @Override
