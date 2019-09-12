@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        log.info("请求方式：method = {}", request.getMethod());
         String token = request.getHeader("Token");
-        log.info("Token = {}", token);
         if (!StringUtils.isEmpty(token) && TokenHelper.checkToken(token)) {
             return true;
         }
