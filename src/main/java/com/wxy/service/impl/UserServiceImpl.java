@@ -32,6 +32,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private EmailUtils emailUtils;
+
     @Override
     public int saveUser(String username, String password, String email) {
         Assert.hasText(username, "The parameter username is required");
@@ -127,7 +130,7 @@ public class UserServiceImpl implements UserService {
             userMapper.update(user);
             // 发送邮件
             try {
-                EmailUtils.sendEmail(email, "重置密码", "新密码：" + newPwd);
+                emailUtils.sendEmail(email, "重置密码", "新密码：" + newPwd);
                 return true;
             } catch (MessagingException e) {
                 e.printStackTrace();
