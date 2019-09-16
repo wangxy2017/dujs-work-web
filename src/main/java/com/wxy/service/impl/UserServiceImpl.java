@@ -6,6 +6,7 @@ import com.wxy.entity.User;
 import com.wxy.mapper.UserMapper;
 import com.wxy.service.CategoryService;
 import com.wxy.service.UserService;
+import com.wxy.util.CodeUtils;
 import com.wxy.util.EmailUtils;
 import com.wxy.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,8 @@ public class UserServiceImpl implements UserService {
         user.setUsername(username);
         List<User> list = userMapper.queryList(user);
         if (list.size() == 0) {
-            user.setSalt(MD5Utils.getSalt(8));
-            user.setPassword(MD5Utils.MD5Encode(password, user.getSalt()));
+            user.setSalt(CodeUtils.randomStr(8));
+            user.setPassword(MD5Utils.encrypt(password, user.getSalt()));
             user.setEmail(email);
             int save = userMapper.save(user);
             if (save > 0) {
@@ -94,9 +95,9 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(oldPassword, "The parameter oldPassword is required");
         Assert.hasText(newPassword, "The parameter newPassword is required");
         User user = userMapper.queryById(userId);
-        if (user != null && user.getPassword().equals(MD5Utils.MD5Encode(oldPassword, user.getSalt()))) {
-            user.setSalt(MD5Utils.getSalt(8));
-            user.setPassword(MD5Utils.MD5Encode(newPassword, user.getSalt()));
+        if (user != null && user.getPassword().equals(MD5Utils.encrypt(oldPassword, user.getSalt()))) {
+            user.setSalt(CodeUtils.randomStr(8));
+            user.setPassword(MD5Utils.encrypt(newPassword, user.getSalt()));
             return userMapper.update(user);
         }
         throw new RuntimeException("密码错误");
@@ -124,9 +125,9 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(email, "The parameter email is required");
         User user = queryByUsername(username);
         if (user != null && user.getEmail().equals(email)) {
-            String newPwd = MD5Utils.getSalt(10);
-            user.setSalt(MD5Utils.getSalt(8));
-            user.setPassword(MD5Utils.MD5Encode(newPwd, user.getSalt()));
+            String newPwd = CodeUtils.randomStr(10);
+            user.setSalt(CodeUtils.randomStr(8));
+            user.setPassword(MD5Utils.encrypt(newPwd, user.getSalt()));
             userMapper.update(user);
             // 发送邮件
             try {

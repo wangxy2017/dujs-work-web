@@ -39,7 +39,7 @@ public class LoginController {
     @PostMapping("/login")
     public ApiResponse login(@RequestBody UserParam user) {
         User user1 = userService.queryByUsername(user.getUsername());
-        if (user1 != null && user1.getPassword().equals(MD5Utils.MD5Encode(user.getPassword(), user1.getSalt()))) {
+        if (user1 != null && user1.getPassword().equals(MD5Utils.encrypt(user.getPassword(), user1.getSalt()))) {
             String token = TokenHelper.createToken(user1.getUsername(), user1.getId());
             Map<String, Object> data = new HashMap<>();
             data.put("token", token);

@@ -2,7 +2,6 @@ package com.wxy.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Random;
 
 /**
  * @Author wangxy
@@ -16,7 +15,7 @@ public class MD5Utils {
      * @param password 密码
      * @return
      */
-    public static String MD5Encode(String password) {
+    public static String encrypt(String password) {
         StringBuilder sb = null;
         try {
             //创建加密对象
@@ -40,29 +39,13 @@ public class MD5Utils {
     }
 
     /**
-     * 盐值加密
+     * 加盐加密
      *
      * @param password
      * @param salt
      * @return
      */
-    public static String MD5Encode(String password, String salt) {
-        return MD5Utils.MD5Encode(password + salt);
-    }
-
-    /**
-     * 生成指定长度的随机盐
-     *
-     * @param length
-     * @return
-     */
-    public static String getSalt(int length) {
-        char[] code = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            sb.append(code[new Random().nextInt(code.length)]);
-        }
-        return sb.toString();
+    public static String encrypt(String password, String salt) {
+        return encrypt(password + salt);
     }
 }
-

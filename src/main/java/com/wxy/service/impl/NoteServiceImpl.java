@@ -7,6 +7,7 @@ import com.wxy.mapper.NoteMapper;
 import com.wxy.service.CategoryService;
 import com.wxy.service.NoteService;
 import com.wxy.util.AESUtils;
+import com.wxy.util.CodeUtils;
 import com.wxy.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class NoteServiceImpl implements NoteService {
         Assert.notNull(userId, "The parameter userId is required");
         Note note = new Note();
         note.setTitle(title);
-        note.setPassword(MD5Utils.getSalt(8));
+        note.setPassword(CodeUtils.randomStr(8));
         note.setContent(AESUtils.encrypt(content, note.getPassword()));
         note.setCategoryId(categoryId);
         note.setUserId(userId);
@@ -76,7 +77,7 @@ public class NoteServiceImpl implements NoteService {
         Note note = noteMapper.queryById(id);
         if (note != null) {
             note.setTitle(title);
-            note.setPassword(MD5Utils.getSalt(8));
+            note.setPassword(CodeUtils.randomStr(8));
             note.setContent(AESUtils.encrypt(content, note.getPassword()));
             note.setCategoryId(categoryId);
             return noteMapper.update(note);
