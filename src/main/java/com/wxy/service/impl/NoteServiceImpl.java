@@ -1,6 +1,6 @@
 package com.wxy.service.impl;
 
-import com.wxy.constanst.CategoryConstants;
+import com.wxy.constanst.NoteCategories;
 import com.wxy.entity.Category;
 import com.wxy.entity.Note;
 import com.wxy.mapper.NoteMapper;
@@ -8,7 +8,6 @@ import com.wxy.service.CategoryService;
 import com.wxy.service.NoteService;
 import com.wxy.util.AESUtils;
 import com.wxy.util.CodeUtils;
-import com.wxy.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -89,7 +88,7 @@ public class NoteServiceImpl implements NoteService {
     public boolean deleteNote(Long id, Long userId) {
         Assert.notNull(id, "The parameter id is required");
         Assert.notNull(userId, "The parameter userId is required");
-        List<Category> list = categoryService.findAll(userId, CategoryConstants.RECYCLE);
+        List<Category> list = categoryService.findAll(userId, NoteCategories.RECYCLE);
         if (list != null && list.size() == 1) {
             Note note = new Note();
             note.setId(id);

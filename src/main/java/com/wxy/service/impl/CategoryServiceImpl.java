@@ -1,6 +1,6 @@
 package com.wxy.service.impl;
 
-import com.wxy.constanst.CategoryConstants;
+import com.wxy.constanst.NoteCategories;
 import com.wxy.entity.Category;
 import com.wxy.mapper.CategoryMapper;
 import com.wxy.service.CategoryService;
@@ -47,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
         category.setName(name);
         // 过滤回收站
         List<Category> list = categoryMapper.queryList(category);
-        return list.stream().filter(n -> !n.getName().equals(CategoryConstants.RECYCLE)).collect(Collectors.toList());
+        return list.stream().filter(n -> !n.getName().equals(NoteCategories.RECYCLE)).collect(Collectors.toList());
 
     }
 
@@ -56,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
         Assert.notNull(id, "The parameter id is required");
         Assert.notNull(userId, "The parameter userId is required");
         Category c = categoryMapper.queryById(id);
-        if (c != null && !c.getName().equals(CategoryConstants.RECYCLE) && !c.getName().equals(CategoryConstants.DEFAULT)) {
+        if (c != null && !c.getName().equals(NoteCategories.RECYCLE) && !c.getName().equals(NoteCategories.DEFAULT)) {
             categoryMapper.delete(id);
             // 重置默认分类
             Map<String, Object> param = new HashMap<>();
@@ -71,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findRecycle(Long userId) {
         Assert.notNull(userId, "The parameter userId is required");
-        List<Category> list = findAll(userId, CategoryConstants.RECYCLE);
+        List<Category> list = findAll(userId, NoteCategories.RECYCLE);
         if (list != null && list.size() == 1) {
             return list.get(0);
         }
@@ -81,7 +81,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findDefault(Long userId) {
         Assert.notNull(userId, "The parameter userId is required");
-        List<Category> list = findAll(userId, CategoryConstants.DEFAULT);
+        List<Category> list = findAll(userId, NoteCategories.DEFAULT);
         if (list != null && list.size() == 1) {
             return list.get(0);
         }
@@ -93,7 +93,7 @@ public class CategoryServiceImpl implements CategoryService {
         Assert.notNull(id, "The parameter id is required");
         Assert.hasText(name, "The parameter name is required");
         Category c = categoryMapper.queryById(id);
-        if (c != null && !c.getName().equals(CategoryConstants.RECYCLE) && !c.getName().equals(CategoryConstants.DEFAULT)) {
+        if (c != null && !c.getName().equals(NoteCategories.RECYCLE) && !c.getName().equals(NoteCategories.DEFAULT)) {
             c.setName(name);
             return categoryMapper.update(c);
         }

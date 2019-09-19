@@ -1,7 +1,6 @@
 package com.wxy.service.impl;
 
-import com.wxy.constanst.CategoryConstants;
-import com.wxy.entity.Category;
+import com.wxy.constanst.NoteCategories;
 import com.wxy.entity.User;
 import com.wxy.mapper.UserMapper;
 import com.wxy.service.CategoryService;
@@ -16,7 +15,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.mail.MessagingException;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,8 +49,8 @@ public class UserServiceImpl implements UserService {
             int save = userMapper.save(user);
             if (save > 0) {
                 // 创建默认分类
-                categoryService.saveCategory(CategoryConstants.DEFAULT, user.getId());
-                categoryService.saveCategory(CategoryConstants.RECYCLE, user.getId());
+                categoryService.saveCategory(NoteCategories.DEFAULT, user.getId());
+                categoryService.saveCategory(NoteCategories.RECYCLE, user.getId());
                 return 1;
             }
         }
