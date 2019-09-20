@@ -27,8 +27,8 @@ public class CategoryController {
 
     @ApiOperation(value = "保存分类", notes = "保存分类")
     @PostMapping("/save")
-    public ApiResponse save(@RequestParam String name) {
-        int i = categoryService.saveCategory(name, TokenHelper.getUserId());
+    public ApiResponse save(@RequestBody CategoryParam category) {
+        int i = categoryService.saveCategory(category.getName(), TokenHelper.getUserId());
         if (i > 0) {
             return ApiResponse.success();
         }
