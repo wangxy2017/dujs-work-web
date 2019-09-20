@@ -10,6 +10,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -125,4 +130,19 @@ public class NoteController {
         return ApiResponse.error();
     }
 
+    /**
+     * 导出笔记
+     *
+     * @param id
+     */
+    @GetMapping("/download/{id}")
+    public void download(HttpServletResponse response, @PathVariable Long id) throws IOException {
+        Note note = noteService.queryById(id);
+        if(note!=null){
+            response.setContentType("application/force-download");// 设置强制下载不打开
+            response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(note.getTitle()+".txt", StandardCharsets.UTF_8.name()));// 设置文件名
+            ServletOutputStream os = response.getOutputStream();
+            os.write(note.getContent().getBytes());
+        }
+    }
 }
