@@ -71,21 +71,27 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findRecycle(Long userId) {
         Assert.notNull(userId, "The parameter userId is required");
-        List<Category> list = findAll(userId, NoteCategories.RECYCLE);
+        Category category = new Category();
+        category.setUserId(userId);
+        category.setName(NoteCategories.RECYCLE);
+        List<Category> list = categoryMapper.queryList(category);
         if (list != null && list.size() == 1) {
             return list.get(0);
         }
-        throw new RuntimeException("数据异常");
+        throw new RuntimeException("没有回收站");
     }
 
     @Override
     public Category findDefault(Long userId) {
         Assert.notNull(userId, "The parameter userId is required");
-        List<Category> list = findAll(userId, NoteCategories.DEFAULT);
+        Category category = new Category();
+        category.setUserId(userId);
+        category.setName(NoteCategories.DEFAULT);
+        List<Category> list = categoryMapper.queryList(category);
         if (list != null && list.size() == 1) {
             return list.get(0);
         }
-        throw new RuntimeException("数据异常");
+        throw new RuntimeException("没有默认笔记");
     }
 
     @Override
@@ -97,6 +103,6 @@ public class CategoryServiceImpl implements CategoryService {
             c.setName(name);
             return categoryMapper.update(c);
         }
-        throw new RuntimeException("修改异常");
+        throw new RuntimeException("修改失败");
     }
 }

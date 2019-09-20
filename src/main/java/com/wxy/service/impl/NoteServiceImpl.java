@@ -81,21 +81,21 @@ public class NoteServiceImpl implements NoteService {
             note.setCategoryId(categoryId);
             return noteMapper.update(note);
         }
-        throw new RuntimeException("查询出错");
+        throw new RuntimeException("查询不到笔记");
     }
 
     @Override
     public boolean deleteNote(Long id, Long userId) {
         Assert.notNull(id, "The parameter id is required");
         Assert.notNull(userId, "The parameter userId is required");
-        List<Category> list = categoryService.findAll(userId, NoteCategories.RECYCLE);
-        if (list != null && list.size() == 1) {
+        Category recycle = categoryService.findRecycle(userId);
+        if (recycle!=null) {
             Note note = new Note();
             note.setId(id);
-            note.setCategoryId(list.get(0).getId());
+            note.setCategoryId(recycle.getId());
             return noteMapper.update(note) > 0;
         }
-        throw new RuntimeException("数据异常");
+        throw new RuntimeException("查询不到回收站");
     }
 
     @Override
