@@ -1,6 +1,7 @@
 package com.wxy.service;
 
 import com.wxy.entity.Category;
+import com.wxy.util.PageModel;
 
 import java.util.List;
 
@@ -56,4 +57,15 @@ public interface CategoryService {
      * @return
      */
     int updateCategory(Long id, String name);
+
+    /**
+     * 分页查询
+     * @param userId
+     * @param name
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageModel<Category> queryPageList(Long userId, String name, Integer pageNum, Integer pageSize);
+
 }

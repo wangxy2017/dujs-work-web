@@ -1,9 +1,12 @@
 package com.wxy.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.wxy.constanst.NoteCategories;
 import com.wxy.entity.Category;
 import com.wxy.mapper.CategoryMapper;
 import com.wxy.service.CategoryService;
+import com.wxy.util.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -61,11 +64,11 @@ public class CategoryServiceImpl implements CategoryService {
             // 重置默认分类
             Map<String, Object> param = new HashMap<>();
             param.put("currId", id);
-            param.put("refId", findDefault(userId));
+            param.put("refId", findDefault(userId).getId());
             categoryMapper.resetNoteCategory(param);
             return true;
         }
-        return false;
+        throw new RuntimeException("系统分类不能删除");
     }
 
     @Override
@@ -104,5 +107,19 @@ public class CategoryServiceImpl implements CategoryService {
             return categoryMapper.update(c);
         }
         throw new RuntimeException("修改失败");
+    }
+
+    @Override
+    public PageModel<Category> queryPageList(Long userId, String name, Integer pageNum, Integer pageSize) {
+        Assert.notNull(userId, "The parameter userId is required");
+        Assert.notNull(pageNum, "The parameter pageNum is required");
+        Assert.notNull(pageSize, "The parameter pageSize is required");
+
+        PageHelper.startPage(pageNum, pageSize);
+        Category category = new Category();
+        category.setUserId(userId);
+        category.setName(name);
+        Page<Category> page = categoryMapper.queryPageList(category);
+        return new PageModel<>(page);
     }
 }

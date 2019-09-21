@@ -15,11 +15,17 @@
         <if test="name !=null and name != ''">and name = #{name}</if>
     </select>
 
+    <select id="queryPageList" parameterType="category" resultType="category">
+        select * from sys_category where 1=1
+        <if test="userId !=null">and user_id = #{userId}</if>
+        <if test="name !=null and name != ''">and name like concat("%",#{name},"%")</if>
+    </select>
+
     <delete id="delete" parameterType="long">
         delete from sys_category where id = #{id}
     </delete>
 
-    <update id="resetNoteCategory" parameterType="map">
+    <update id="resetNoteCategory" parameterType="java.util.Map">
         update sys_note set category_id = #{refId} where category_id = #{currId}
     </update>
 

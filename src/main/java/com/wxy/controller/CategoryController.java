@@ -4,6 +4,7 @@ import com.wxy.entity.Category;
 import com.wxy.request.CategoryParam;
 import com.wxy.service.CategoryService;
 import com.wxy.util.ApiResponse;
+import com.wxy.util.PageModel;
 import com.wxy.util.TokenHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,11 +36,19 @@ public class CategoryController {
         return ApiResponse.error();
     }
 
-    @ApiOperation(value = "查询分类", notes = "查询分类")
-    @GetMapping("/list")
+    @ApiOperation(value = "查询所有分类", notes = "查询所有分类")
+    @GetMapping("/findAll")
     public ApiResponse findAll() {
         List<Category> list = categoryService.findAll(TokenHelper.getUserId(), null);
         return ApiResponse.success(list);
+    }
+    @ApiOperation(value = "分页查询分类", notes = "分页查询分类")
+    @GetMapping("/list")
+    public ApiResponse list(@RequestParam(required = false) String name,
+                            @RequestParam Integer pageNum,
+                            @RequestParam Integer pageSize){
+        PageModel<Category> pageModel = categoryService.queryPageList(TokenHelper.getUserId(), name, pageNum, pageSize);
+        return ApiResponse.success(pageModel);
     }
 
     /**
