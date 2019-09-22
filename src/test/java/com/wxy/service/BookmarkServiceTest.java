@@ -31,6 +31,7 @@ public class BookmarkServiceTest {
             bookmark.setIcon("icon" + i);
             bookmark.setHref("href" + i);
             bookmark.setName("name" + i);
+            bookmark.setType("type" + i);
             bookmark.setUserId(4L);
             list.add(bookmark);
         }

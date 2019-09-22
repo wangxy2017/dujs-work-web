@@ -22,6 +22,7 @@ CREATE TABLE `sys_bookmark` (
   `icon` text NOT NULL,
   `href` varchar(200) NOT NULL,
   `name` varchar(200) NOT NULL,
+  `type` varchar(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

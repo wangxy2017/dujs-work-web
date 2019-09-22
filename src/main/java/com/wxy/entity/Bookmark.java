@@ -23,6 +23,10 @@ public class Bookmark extends BaseEntity {
      */
     private String name;
     /**
+     * 书签类型
+     */
+    private String type;
+    /**
      * 用户id
      */
     private Long userId;

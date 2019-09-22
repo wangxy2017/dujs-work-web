@@ -47,6 +47,7 @@ public class BookmarkController {
                 b.setIcon(a.attr("ICON"));
                 b.setHref(a.attr("HREF"));
                 b.setName(a.text());
+                b.setType("默认导入");
                 b.setUserId(TokenHelper.getUserId());
                 bookmarks.add(b);
             });
