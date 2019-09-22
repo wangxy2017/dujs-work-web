@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
         // 发送邮件
         try {
             emailUtils.sendEmail(adminEmail, "用户意见反馈", content);
-            emailUtils.sendEmail(email,"dujs系统管理员回复","感谢您的宝贵意见，我们会努力改进，谢谢支持！");
+            emailUtils.sendEmail(email,"dujs系统管理员回复","感谢您的宝贵意见，我们会努力改进的，谢谢支持！");
             return true;
         } catch (MessagingException e) {
             e.printStackTrace();
