@@ -9,6 +9,7 @@ import com.wxy.util.CodeUtils;
 import com.wxy.util.EmailUtils;
 import com.wxy.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -33,6 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private EmailUtils emailUtils;
+
+    @Value("${mail.adminEmail}")
+    private String adminEmail;
 
     @Override
     public int saveUser(String username, String password, String email) {
@@ -145,7 +149,7 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(content, "The parameter content is required");
         // 发送邮件
         try {
-            emailUtils.sendEmail("243548880@qq.com", "用户意见反馈", content);
+            emailUtils.sendEmail(adminEmail, "用户意见反馈", content);
             emailUtils.sendEmail(email,"dujs系统管理员回复","感谢您的宝贵意见，我们会努力改进，谢谢支持！");
             return true;
         } catch (MessagingException e) {
