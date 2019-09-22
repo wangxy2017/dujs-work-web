@@ -37,4 +37,11 @@ public interface BookmarkService {
      * @param userId
      */
     boolean deleteAll(Long userId);
+
+    /**
+     * 查询所有书签
+     * @param userId
+     * @return
+     */
+    List<Bookmark> findAll(Long userId);
 }

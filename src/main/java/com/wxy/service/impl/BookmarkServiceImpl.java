@@ -2,7 +2,6 @@ package com.wxy.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.wxy.entity.Bookmark;
 import com.wxy.mapper.BookmarkMapper;
 import com.wxy.service.BookmarkService;
@@ -52,5 +51,14 @@ public class BookmarkServiceImpl implements BookmarkService {
         Assert.notNull(userId, "The parameter userId is required");
         bookmarkMapper.deleteByUserId(userId);
         return true;
+    }
+
+    @Override
+    public List<Bookmark> findAll(Long userId) {
+        Assert.notNull(userId, "The parameter userId is required");
+        Bookmark bookmark = new Bookmark();
+        bookmark.setUserId(userId);
+        List<Bookmark> list = bookmarkMapper.queryList(bookmark);
+        return list;
     }
 }

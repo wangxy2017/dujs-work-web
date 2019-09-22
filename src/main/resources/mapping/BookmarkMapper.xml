@@ -24,6 +24,11 @@
         <if test="name != null and name != ''">and name like concat("%",#{name},"%")</if>
     </select>
 
+    <select id="queryList" resultType="bookmark" parameterType="bookmark">
+        select * from sys_bookmark where 1=1
+        <if test="userId != null">and user_id = #{userId}</if>
+    </select>
+
     <delete id="deleteByUserId" parameterType="long">
         delete from sys_bookmark where user_id = #{userId}
     </delete>

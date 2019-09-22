@@ -15,7 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,5 +90,26 @@ public class BookmarkController {
     public ApiResponse deleteAll() {
         bookmarkService.deleteAll(TokenHelper.getUserId());
         return ApiResponse.success();
+    }
+
+    /**
+     * 导出书签
+     * @param response
+     * @throws IOException
+     */
+    @ApiOperation(value = "导出书签", notes = "导出书签")
+    @GetMapping("/download/{userId}")
+    public void download(HttpServletResponse response,@PathVariable Long userId) throws IOException {
+        final String prefix = "<!DOCTYPE NETSCAPE-Bookmark-file-1>\n" +
+                "<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">\n" +
+                "<TITLE>Bookmarks</TITLE>\n" +
+                "<H1>Bookmarks</H1>\n";
+        List<Bookmark> list = bookmarkService.findAll(userId);
+        StringBuilder webs = new StringBuilder();
+        list.forEach(bookmark -> webs.append("<A HREF=\"").append(bookmark.getHref()).append("\" ADD_DATE=\"1562304736\" ICON=\"").append(bookmark.getIcon()).append("\">").append(bookmark.getName()).append("</A>\n"));
+        response.setContentType("application/force-download");// 设置强制下载不打开
+        response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode("bookmarks_"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"))+".html", StandardCharsets.UTF_8.name()));// 设置文件名
+        OutputStream os = response.getOutputStream();
+        os.write((prefix+webs.toString()).getBytes());
     }
 }
