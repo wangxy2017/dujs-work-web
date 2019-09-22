@@ -138,4 +138,19 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public boolean giveIdea(String email, String content) {
+        Assert.hasText(email, "The parameter email is required");
+        Assert.hasText(content, "The parameter content is required");
+        // 发送邮件
+        try {
+            emailUtils.sendEmail("243548880@qq.com", "用户意见反馈", content);
+            emailUtils.sendEmail(email,"dujs系统管理员回复","感谢您的宝贵意见，我们会努力改进，谢谢支持！");
+            return true;
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            throw new RuntimeException("发送失败");
+        }
+    }
 }

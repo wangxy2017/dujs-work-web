@@ -43,4 +43,13 @@ public interface UserService {
      * @return
      */
     boolean forgotPassword(String username, String email);
+
+    /**
+     * 意见反馈
+     *
+     * @param email
+     * @param content
+     * @return
+     */
+    boolean giveIdea(String email, String content);
 }

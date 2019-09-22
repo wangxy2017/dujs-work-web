@@ -1,5 +1,7 @@
 package com.wxy.controller;
 
+import com.wxy.entity.User;
+import com.wxy.request.IdeaParam;
 import com.wxy.request.UserParam;
 import com.wxy.service.UserService;
 import com.wxy.util.ApiResponse;
@@ -64,5 +66,22 @@ public class UserController {
     @GetMapping("/query/{id}")
     public ApiResponse query(@PathVariable Long id) {
         return ApiResponse.success(userService.queryById(id));
+    }
+
+    /**
+     * 意见反馈
+     *
+     * @param idea
+     * @return
+     */
+    @ApiOperation(value = "意见反馈", notes = "意见反馈")
+    @PostMapping("/idea")
+    public ApiResponse giveIdea(@RequestBody IdeaParam idea) {
+        User user = userService.queryById(TokenHelper.getUserId());
+        boolean bool = userService.giveIdea(user.getEmail(), idea.getContent());
+        if (bool) {
+            return ApiResponse.success();
+        }
+        return ApiResponse.error();
     }
 }
