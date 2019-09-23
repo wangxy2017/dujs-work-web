@@ -2,7 +2,7 @@ package com.wxy.configuration;
 
 import com.wxy.mapper.NoteMapper;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @Author wxy
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
  * @Description TODO
  **/
 @MapperScan(basePackageClasses = NoteMapper.class)
-@Component
+@Configuration
 public class MapperConfiguration {
 }
