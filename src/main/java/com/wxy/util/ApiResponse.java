@@ -47,6 +47,8 @@ public class ApiResponse {
     public static ApiResponse error(Integer code, String msg) {
         return new ApiResponse(code, msg, null);
     }
-
+    public static ApiResponse error(Integer code, String msg,Object data) {
+        return new ApiResponse(code, msg, data);
+    }
 }
 

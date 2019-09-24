@@ -1,5 +1,6 @@
 package com.wxy.interceptor;
 
+import com.wxy.util.RequestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,16 +13,12 @@ import java.util.UUID;
 @Slf4j
 public class LoggingInterceptor implements HandlerInterceptor {
 
-    private static ThreadLocal<Long> startTime = new ThreadLocal<>();
-
-    private static ThreadLocal<String> requestId = new ThreadLocal<>();
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         long start = System.nanoTime();
-        startTime.set(start);
+        RequestUtils.startTime.set(start);
         String id = UUID.randomUUID().toString();
-        requestId.set(id);
+        RequestUtils.requestId.set(id);
         return true;
     }
 
@@ -32,7 +29,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        long usedTime = System.nanoTime() - startTime.get();
-        log.info("[requestId={},request={},response={},exception={},total={},time={}]",requestId.get(),request,response,ex,usedTime/1e6d+".ms",new Date());
+        long usedTime = System.nanoTime() - RequestUtils.startTime.get();
+        log.info("[requestId={},request={},response={},exception={},total={},time={}]",RequestUtils.requestId.get(),request,response,ex,usedTime/1e6d+".ms",new Date());
     }
 }

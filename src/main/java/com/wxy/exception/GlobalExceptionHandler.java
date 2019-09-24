@@ -1,10 +1,13 @@
 package com.wxy.exception;
 
 import com.wxy.util.ApiResponse;
+import com.wxy.util.RequestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
 
 /**
  * @Author wxy
@@ -17,7 +20,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler()
     @ResponseBody
     public ApiResponse exceptionHandle(Exception e) {
-        e.printStackTrace();
-        return ApiResponse.error(500, e.getMessage());
+        log.error("请求异常：requestId = {},exception = {}", RequestUtils.requestId.get(), e.getMessage());
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("requestId", RequestUtils.requestId.get());
+        return ApiResponse.error(500, e.getMessage(), data);
     }
 }
