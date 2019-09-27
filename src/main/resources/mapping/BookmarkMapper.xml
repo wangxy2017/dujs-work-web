@@ -13,7 +13,7 @@
         insert into sys_bookmark(icon,href,name,type,user_id)
         values
         <foreach collection="list" item="b" separator=",">
-            (#{b.icon},#{b.href},#{b.name},#{type},#{b.userId})
+            (#{b.icon},#{b.href},#{b.name},#{b.type},#{b.userId})
         </foreach>
     </insert>
 
