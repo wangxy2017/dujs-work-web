@@ -47,7 +47,7 @@ CREATE TABLE `sys_user` (
   `email` varchar(64) NOT NULL,
   `salt` varchar(64) NOT NULL,
   `nick_name` varchar(64),
-  `photo` varchar(255),
+  `photo` varchar(1000),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
