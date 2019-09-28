@@ -30,4 +30,8 @@ public class User extends BaseEntity {
      * 昵称
      */
     private String nickName;
+    /**
+     * 头像
+     */
+    private String photo;
 }

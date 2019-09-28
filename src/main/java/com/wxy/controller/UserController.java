@@ -49,7 +49,7 @@ public class UserController {
     @ApiOperation(value = "修改基本信息", notes = "修改基本信息")
     @PostMapping("/update")
     public ApiResponse update(@RequestBody UserParam user) {
-        int update = userService.updateUser(TokenHelper.getUserId(), user.getEmail(), user.getNickName());
+        int update = userService.updateUser(TokenHelper.getUserId(), user.getEmail(), user.getNickName(),user.getPhoto());
         if (update > 0) {
             return ApiResponse.success();
         }

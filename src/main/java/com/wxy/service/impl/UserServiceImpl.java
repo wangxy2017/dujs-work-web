@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateUser(Long userId, String email, String nickName) {
+    public int updateUser(Long userId, String email, String nickName,String photo) {
         Assert.notNull(userId, "1The parameter userId is required");
         if (StringUtils.hasText(email)) {
             User user1 = queryByEmail(email);
@@ -118,6 +118,7 @@ public class UserServiceImpl implements UserService {
         user.setId(userId);
         user.setEmail(email);
         user.setNickName(nickName);
+        user.setPhoto(photo);
         return userMapper.update(user);
     }
 

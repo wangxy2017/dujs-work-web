@@ -14,4 +14,5 @@ public class UserParam {
     private String email;
     private String new_password;
     private String nickName;
+    private String photo;
 }

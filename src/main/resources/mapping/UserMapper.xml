@@ -5,8 +5,8 @@
 <mapper namespace="com.wxy.mapper.UserMapper">
 
     <insert id="save" parameterType="user" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_user(username,password,email,salt)
-        values(#{username},#{password},#{email},#{salt})
+        insert into sys_user(username,password,email,salt,nick_name,photo)
+        values(#{username},#{password},#{email},#{salt},#{nickName},#{photo})
     </insert>
 
     <select id="queryById" parameterType="long" resultType="user">
@@ -26,6 +26,7 @@
             <if test="salt != null and salt != ''">salt = #{salt},</if>
             <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
             <if test="email != null and email != ''">email = #{email},</if>
+            <if test="photo != null and photo != ''">photo = #{photo},</if>
         </set>
         where id = #{id}
     </update>

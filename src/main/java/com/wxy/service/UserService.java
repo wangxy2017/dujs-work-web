@@ -34,7 +34,7 @@ public interface UserService {
      * @param nickName
      * @return
      */
-    int updateUser(Long userId, String email, String nickName);
+    int updateUser(Long userId, String email, String nickName,String photo);
 
     /**
      * 忘记密码

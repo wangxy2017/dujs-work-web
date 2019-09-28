@@ -83,7 +83,8 @@ public class UserServiceTest {
         Long id = 4L;
         String email = "";
         String nickName = "小王子";
-        int update = userService.updateUser(id, email, nickName);
+        String photo = "";
+        int update = userService.updateUser(id, email, nickName,photo);
         log.info("修改用户：update = {}", update > 0);
     }
 }
