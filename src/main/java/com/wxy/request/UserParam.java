@@ -15,4 +15,5 @@ public class UserParam {
     private String new_password;
     private String nickName;
     private String photo;
+    private String code;
 }

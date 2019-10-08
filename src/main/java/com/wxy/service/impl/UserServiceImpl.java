@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateUser(Long userId, String email, String nickName,String photo) {
+    public int updateUser(Long userId, String email, String nickName, String photo) {
         Assert.notNull(userId, "1The parameter userId is required");
         if (StringUtils.hasText(email)) {
             User user1 = queryByEmail(email);
@@ -151,7 +151,20 @@ public class UserServiceImpl implements UserService {
         // 发送邮件
         try {
             emailUtils.sendEmail(adminEmail, "用户意见反馈", content);
-            emailUtils.sendEmail(email,"dujs系统管理员回复","感谢您的宝贵意见，我们会努力改进的，谢谢支持！");
+            emailUtils.sendEmail(email, "dujs系统管理员回复", "感谢您的宝贵意见，我们会努力改进的，谢谢支持！");
+            return true;
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            throw new RuntimeException("发送失败");
+        }
+    }
+
+    @Override
+    public boolean sendCode(String email, String code) {
+        Assert.hasText(email, "The parameter email is required");
+        Assert.hasText(code, "The parameter code is required");
+        try {
+            emailUtils.sendEmail(email, "注册验证码", code);
             return true;
         } catch (MessagingException e) {
             e.printStackTrace();
