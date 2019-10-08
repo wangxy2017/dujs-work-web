@@ -55,7 +55,7 @@ public class NoteServiceTest {
      */
     @Test
     public void TestQueryById() {
-        Long id = 2L;
+        Long id = 1L;
         Note note = noteService.queryById(id);
         log.info("查询笔记；note = {}", note);
     }
