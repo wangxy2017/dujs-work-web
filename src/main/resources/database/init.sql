@@ -3,8 +3,8 @@ USE dujs_work;
 
 CREATE TABLE `sys_note` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_time` datetime NOT NULL DEFAULT NOW(),
+  `update_time` datetime NOT NULL DEFAULT NOW(),
   `delete_status` int(1) NOT NULL DEFAULT '0',
   `title` varchar(64) NOT NULL,
   `content` text NOT NULL,
@@ -16,8 +16,8 @@ CREATE TABLE `sys_note` (
 
 CREATE TABLE `sys_bookmark` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_time` datetime NOT NULL DEFAULT NOW(),
+  `update_time` datetime NOT NULL DEFAULT NOW(),
   `delete_status` int(1) NOT NULL DEFAULT '0',
   `icon` text NOT NULL,
   `href` varchar(200) NOT NULL,
@@ -29,8 +29,8 @@ CREATE TABLE `sys_bookmark` (
 
 CREATE TABLE `sys_category` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_time` datetime NOT NULL DEFAULT NOW(),
+  `update_time` datetime NOT NULL DEFAULT NOW(),
   `delete_status` int(1) NOT NULL DEFAULT '0',
   `name` varchar(64) NOT NULL,
   `user_id` bigint(20) NOT NULL,
@@ -39,8 +39,8 @@ CREATE TABLE `sys_category` (
 
 CREATE TABLE `sys_user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_time` datetime NOT NULL DEFAULT NOW(),
+  `update_time` datetime NOT NULL DEFAULT NOW(),
   `delete_status` int(1) NOT NULL DEFAULT '0',
   `username` varchar(64) NOT NULL,
   `password` varchar(64) NOT NULL,
