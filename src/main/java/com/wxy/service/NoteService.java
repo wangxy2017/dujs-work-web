@@ -46,7 +46,7 @@ public interface NoteService {
      * @param categoryId
      * @return
      */
-    List<Note> findAll(Long userId, Long categoryId);
+    List<Note> findAll(Long userId, Long categoryId,String title);
 
     /**
      * 删除笔记

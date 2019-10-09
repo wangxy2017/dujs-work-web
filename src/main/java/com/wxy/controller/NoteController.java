@@ -69,9 +69,9 @@ public class NoteController {
      * @return
      */
     @ApiOperation(value = "查询所有笔记", notes = "查询所有笔记")
-    @GetMapping("/findAll/{category_id}")
-    public ApiResponse findAll(@PathVariable(required = false) Long category_id) {
-        List<Note> list = noteService.findAll(TokenHelper.getUserId(), category_id == 0 ? null : category_id);
+    @GetMapping("/findAll")
+    public ApiResponse findAll(@RequestParam(required = false) Long category_id, @RequestParam(required = false) String title) {
+        List<Note> list = noteService.findAll(TokenHelper.getUserId(), category_id, title);
         return ApiResponse.success(list);
     }
 
@@ -139,9 +139,9 @@ public class NoteController {
     @GetMapping("/download/{id}")
     public void download(HttpServletResponse response, @PathVariable Long id) throws IOException {
         Note note = noteService.queryById(id);
-        if(note!=null){
+        if (note != null) {
             response.setContentType("application/force-download");// 设置强制下载不打开
-            response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(note.getTitle()+".txt", StandardCharsets.UTF_8.name()));// 设置文件名
+            response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(note.getTitle() + ".txt", StandardCharsets.UTF_8.name()));// 设置文件名
             OutputStream os = response.getOutputStream();
             os.write(note.getContent().getBytes());
         }

@@ -59,11 +59,12 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<Note> findAll(Long userId, Long categoryId) {
+    public List<Note> findAll(Long userId, Long categoryId,String title) {
         Assert.notNull(userId, "The parameter userId is required");
         Note note = new Note();
         note.setUserId(userId);
         note.setCategoryId(categoryId);
+        note.setTitle(title);
         List<Note> list = noteMapper.queryList(note);
         // 过滤回收站
         Category recycle = categoryService.findRecycle(userId);

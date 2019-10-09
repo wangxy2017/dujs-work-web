@@ -67,7 +67,8 @@ public class NoteServiceTest {
     public void TestFindAll() {
         Long userId = 1L;
         Long categoryId = null;
-        List<Note> list = noteService.findAll(userId, categoryId);
+        String title = "";
+        List<Note> list = noteService.findAll(userId, categoryId, title);
         log.info("查询笔记列表；list = {}", list);
     }
 

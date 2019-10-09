@@ -28,6 +28,7 @@
         select * from sys_note where 1 =1
         <if test="userId != null">and user_id = #{userId}</if>
         <if test="categoryId != null">and category_id = #{categoryId}</if>
+        <if test="title != null and title != ''">and title like concat("%",#{title},"%")</if>
         order by create_time desc
     </select>
 
