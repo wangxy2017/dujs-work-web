@@ -33,4 +33,8 @@
     <delete id="deleteByUserId" parameterType="long">
         delete from sys_bookmark where user_id = #{userId}
     </delete>
+
+    <delete id="delete" parameterType="long">
+        delete from sys_bookmark where id = #{id}
+    </delete>
 </mapper>

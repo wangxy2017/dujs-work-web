@@ -61,4 +61,11 @@ public class BookmarkServiceImpl implements BookmarkService {
         List<Bookmark> list = bookmarkMapper.queryList(bookmark);
         return list;
     }
+
+    @Override
+    public boolean delete(Long id) {
+        Assert.notNull(id, "The parameter id is required");
+        bookmarkMapper.delete(id);
+        return true;
+    }
 }

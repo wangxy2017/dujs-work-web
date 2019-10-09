@@ -125,4 +125,20 @@ public class BookmarkController {
         OutputStream os = response.getOutputStream();
         os.write((prefix + webs.toString()).getBytes());
     }
+
+    /**
+     * 删除书签
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "删除书签", notes = "删除书签")
+    @DeleteMapping("/{id}")
+    public ApiResponse delete(@PathVariable Long id) {
+        boolean b = bookmarkService.delete(id);
+        if (b) {
+            return ApiResponse.success();
+        }
+        return ApiResponse.error();
+    }
 }
