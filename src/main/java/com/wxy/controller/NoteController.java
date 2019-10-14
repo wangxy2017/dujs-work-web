@@ -143,7 +143,7 @@ public class NoteController {
             response.setContentType("application/force-download");// 设置强制下载不打开
             response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(note.getTitle() + ".txt", StandardCharsets.UTF_8.name()));// 设置文件名
             OutputStream os = response.getOutputStream();
-            os.write(note.getContent().getBytes());
+            os.write(note.getContent().replaceAll("<p>", "").replaceAll("</p>", "\n").getBytes());
         }
     }
 }
