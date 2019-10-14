@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Slf4j
-public class LoggingInterceptor implements HandlerInterceptor {
+public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

@@ -1,6 +1,6 @@
 package com.wxy.configuration;
 
-import com.wxy.interceptor.LoggingInterceptor;
+import com.wxy.interceptor.LogInterceptor;
 import com.wxy.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -13,7 +13,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 日志拦截
-        registry.addInterceptor(new LoggingInterceptor())
+        registry.addInterceptor(new LogInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
         // 登录拦截
