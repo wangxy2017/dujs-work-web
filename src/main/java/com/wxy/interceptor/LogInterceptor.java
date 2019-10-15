@@ -22,7 +22,7 @@ public class LogInterceptor implements HandlerInterceptor {
         String method = request.getMethod();
         Long userId = TokenHelper.getUserId();
         String callTime = DateUtils.nowTime();
-        log.debug("requestId: {}, ip: {}, uri: {}, method: {}, exception: {}, userId: {}, callTime: {}", requestId, ip,
+        log.info("requestId: {}, ip: {}, uri: {}, method: {}, exception: {}, userId: {}, callTime: {}", requestId, ip,
                 uri, method, ex.getMessage(), userId, callTime);
     }
 }
