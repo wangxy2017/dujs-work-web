@@ -20,9 +20,8 @@ public class LogInterceptor implements HandlerInterceptor {
         String ip = RequestUtils.getRemoteIp(request);
         String uri = request.getRequestURI();
         String method = request.getMethod();
-        Long userId = TokenHelper.getUserId();
         String callTime = DateUtils.nowTime();
-        log.info("requestId: {}, ip: {}, uri: {}, method: {}, exception: {}, userId: {}, callTime: {}", requestId, ip,
-                uri, method, ex.getMessage(), userId, callTime);
+        log.info("requestId: {}, ip: {}, uri: {}, method: {}, callTime: {}", requestId, ip,
+                uri, method, callTime);
     }
 }
