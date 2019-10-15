@@ -20,9 +20,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler()
     @ResponseBody
     public ApiResponse exceptionHandle(Exception e) {
-        log.error("请求异常：requestId = {},exception = {}", RequestUtils.requestId.get(), e.getMessage());
+        log.error("请求异常：requestId = {},exception = {}", RequestUtils.getOrCreateRequestId(), e.getMessage());
         HashMap<String, Object> data = new HashMap<>();
-        data.put("requestId", RequestUtils.requestId.get());
+        data.put("requestId", RequestUtils.getOrCreateRequestId());
         return ApiResponse.error(500, e.getMessage(), data);
     }
 }
