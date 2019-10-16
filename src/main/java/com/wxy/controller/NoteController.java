@@ -4,11 +4,13 @@ import com.wxy.entity.Note;
 import com.wxy.request.NoteParam;
 import com.wxy.service.NoteService;
 import com.wxy.util.ApiResponse;
+import com.wxy.util.HtmlToTextUtils;
 import com.wxy.util.TokenHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -143,7 +145,7 @@ public class NoteController {
             response.setContentType("application/force-download");// 设置强制下载不打开
             response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(note.getTitle() + ".txt", StandardCharsets.UTF_8.name()));// 设置文件名
             OutputStream os = response.getOutputStream();
-            os.write(note.getContent().replaceAll("<p>", "").replaceAll("</p>", "\n").getBytes());
+            os.write(HtmlToTextUtils.convert(note.getContent()).getBytes());
         }
     }
 }
