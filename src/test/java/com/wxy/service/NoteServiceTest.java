@@ -94,6 +94,11 @@ public class NoteServiceTest {
         log.info("查询回收站笔记：list = {}", list);
     }
 
+    /**
+     * 导出全部笔记
+     *
+     * @throws IOException
+     */
     @Test
     public void downloadAll() throws IOException {
         List<Note> all = noteService.findAll(1l, null, null);
@@ -108,6 +113,6 @@ public class NoteServiceTest {
         });
         FileOutputStream fos = new FileOutputStream(String.format("download_%tF.txt", new Date()));
         fos.write(sb.toString().getBytes());
-        log.info("导出全部笔记");
+        log.info("导出全部笔记 =============");
     }
 }
