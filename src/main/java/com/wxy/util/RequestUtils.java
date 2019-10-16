@@ -1,7 +1,5 @@
 package com.wxy.util;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
@@ -11,28 +9,30 @@ import java.util.UUID;
  * @Description TODO
  **/
 public class RequestUtils {
-    private static volatile ThreadLocal<String> threadRequestId = new ThreadLocal<>();
+    private static ThreadLocal<String> threadRequestId = new ThreadLocal<>();
 
     public static String getOrCreateRequestId() {
         if (threadRequestId.get() == null) {
-            synchronized (RequestUtils.class) {
-                if (threadRequestId.get() == null) {
-                    threadRequestId.set(UUID.randomUUID().toString());
-                }
-            }
+            threadRequestId.set(UUID.randomUUID().toString());
         }
         return threadRequestId.get();
     }
 
     public static String getRemoteIp(HttpServletRequest request) {
-        String ip = request.getHeader("Client-Ip");
-        if (StringUtils.isBlank(ip)) {
-            ip = request.getHeader("X-Bce-Client-Ip");
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
         }
-        if (StringUtils.isBlank(ip)) {
-            ip = request.getHeader("X-Forwarded-For");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (StringUtils.isBlank(ip)) {
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
         return ip;
